@@ -2,8 +2,8 @@ Name: usercenter.rpc
 ListenOn: 0.0.0.0:9999
 Mode: dev
 JwtAuth:
-  AccessSecret: "cjh0908"
-  AccessExpire: 3600
+  AccessSecret: "cjh090888"
+  AccessExpire: 36000
 Etcd:
   Hosts:
   - 139.9.177.213:2379

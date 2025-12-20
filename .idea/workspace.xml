@@ -5,44 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
-      <change afterPath="$PROJECT_DIR$/pkg/ctxdata/ctxData.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/globalkey/key.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/interceptor/rpcserver/loggerInterceptor.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/xerr/errCode.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/xerr/errMsg.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/xerr/errors.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/usercenter/api/etc/usercenter.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/etc/usercenter.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/go.sum" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/detailHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/detailHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/loginHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/loginHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/registerHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/registerHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/wxMiniAuthHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/wxMiniAuthHandler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/detailLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/detailLogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/loginLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/loginLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/registerLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/registerLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/wxMiniAuthLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/wxMiniAuthLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/svc/serviceContext.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/usercenter.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/usercenter.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/model/userAuthModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/model/userAuthModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/model/userModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/model/userModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/model/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/model/vars.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/etc/usercenter.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/etc/usercenter.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/generateTokenLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/generateTokenLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByAuthKeyLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByAuthKeyLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByUserIdLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByUserIdLogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserInfoLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserInfoLogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/loginLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/loginLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/registerLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/registerLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/server/usercenterServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/server/usercenterServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/svc/serviceContext.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/usercenter.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/usercenter.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/usercenter/usercenter.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/usercenter/usercenter.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/ctxdata/ctxData.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/ctxdata/ctxData.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +87,7 @@
       <recent name="D:\go-zero-looklook\app\usercenter\api" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/usercenter/api">
+  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/usercenter/rpc">
     <configuration name="go build go-zero-looklook/app/usercenter/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="go-zero-looklook" />
       <working_directory value="$PROJECT_DIR$" />
@@ -138,8 +108,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/api" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/rpc" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/api" />
       </list>
     </recent_temporary>
   </component>

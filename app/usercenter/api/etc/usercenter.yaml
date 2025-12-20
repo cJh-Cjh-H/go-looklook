@@ -9,4 +9,4 @@ UsercenterRpcConf:
 #jwt验证
 JwtAuth:
   AccessSecret: "cjh090888"
-  AccessExpire: 3600
+  AccessExpire: 36000

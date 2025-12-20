@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"go-zero-looklook/app/usercenter/model"
+	"go-zero-looklook/app/usercenter/rpc/usercenter"
 
 	"go-zero-looklook/app/usercenter/api/internal/svc"
 	"go-zero-looklook/app/usercenter/api/internal/types"
@@ -25,6 +27,19 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
+	loginResp, err := l.svcCtx.UsercenterRpc.Login(l.ctx, &usercenter.LoginReq{
+		Password: req.Password,
+		AuthType: model.UserAuthTypeSystem,
+		AuthKey:  req.Mobile,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	resp = &types.LoginResp{
+		AccessToken:  loginResp.AccessToken,
+		AccessExpire: loginResp.AccessExpire,
+		RefreshAfter: loginResp.RefreshAfter,
+	}
+	return resp, nil
 }

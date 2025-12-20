@@ -2,6 +2,10 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
+	"go-zero-looklook/app/usercenter/rpc/usercenter"
+	"go-zero-looklook/pkg/xerr"
 
 	"go-zero-looklook/app/usercenter/rpc/internal/svc"
 	"go-zero-looklook/app/usercenter/rpc/pb"
@@ -24,7 +28,14 @@ func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUs
 }
 
 func (l *GetUserInfoLogic) GetUserInfo(in *pb.GetUserInfoReq) (*pb.GetUserInfoResp, error) {
-	// todo: add your logic here and delete this line
-
-	return &pb.GetUserInfoResp{}, nil
+	//查询user表
+	user, err := l.svcCtx.UserModel.FindOne(l.ctx, in.Id)
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "GetUserInfo find user db err , id:%d , err:%v", in.Id, err)
+	}
+	var respUser usercenter.User
+	_ = copier.Copy(&respUser, user)
+	return &pb.GetUserInfoResp{
+		User: &respUser,
+	}, nil
 }
