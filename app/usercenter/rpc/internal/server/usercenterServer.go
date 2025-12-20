@@ -7,9 +7,9 @@ package server
 import (
 	"context"
 
-	"go-zero-looklook/internal/logic"
-	"go-zero-looklook/internal/svc"
-	"go-zero-looklook/pb"
+	"go-zero-looklook/app/usercenter/rpc/internal/logic"
+	"go-zero-looklook/app/usercenter/rpc/internal/svc"
+	"go-zero-looklook/app/usercenter/rpc/pb"
 )
 
 type UsercenterServer struct {

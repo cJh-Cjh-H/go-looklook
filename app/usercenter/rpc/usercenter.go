@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"go-zero-looklook/pkg/interceptor/rpcserver"
 
-	"go-zero-looklook/internal/config"
-	"go-zero-looklook/internal/server"
-	"go-zero-looklook/internal/svc"
-	"go-zero-looklook/pb"
+	"go-zero-looklook/app/usercenter/rpc/internal/config"
+	"go-zero-looklook/app/usercenter/rpc/internal/server"
+	"go-zero-looklook/app/usercenter/rpc/internal/svc"
+	"go-zero-looklook/app/usercenter/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -16,7 +17,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/usercenter.yaml", "the config file")
+var configFile = flag.String("f", "app/usercenter/rpc/etc/usercenter.yaml", "the config file")
 
 func main() {
 	flag.Parse()
@@ -33,6 +34,8 @@ func main() {
 		}
 	})
 	defer s.Stop()
+	//rpc log
+	s.AddUnaryInterceptors(rpcserver.LoggerInterceptor)
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()

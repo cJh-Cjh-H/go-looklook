@@ -3,8 +3,8 @@ package user
 import (
 	"context"
 
-	"go-zero-looklook/internal/svc"
-	"go-zero-looklook/internal/types"
+	"go-zero-looklook/app/usercenter/api/internal/svc"
+	"go-zero-looklook/app/usercenter/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

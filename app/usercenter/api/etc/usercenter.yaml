@@ -1,3 +1,12 @@
 Name: usercenter
 Host: 0.0.0.0
-Port: 8888
+Port: 9990
+UsercenterRpcConf:
+  Etcd:
+    Hosts:
+      - 139.9.177.213:2379
+    Key: usercenter.rpc
+#jwt验证
+JwtAuth:
+  AccessSecret: "cjh090888"
+  AccessExpire: 3600

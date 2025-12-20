@@ -4,11 +4,57 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成" />
+    <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
+      <change afterPath="$PROJECT_DIR$/pkg/ctxdata/ctxData.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/globalkey/key.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/interceptor/rpcserver/loggerInterceptor.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/xerr/errCode.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/xerr/errMsg.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/xerr/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/etc/usercenter.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/etc/usercenter.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/go.sum" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/detailHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/detailHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/loginHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/loginHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/registerHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/registerHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/wxMiniAuthHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/handler/user/wxMiniAuthHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/detailLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/detailLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/loginLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/loginLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/registerLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/registerLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/wxMiniAuthLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/wxMiniAuthLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/svc/serviceContext.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/usercenter.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/usercenter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/model/userAuthModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/model/userAuthModel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/model/userModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/model/userModel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/model/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/model/vars.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/etc/usercenter.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/etc/usercenter.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/generateTokenLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/generateTokenLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByAuthKeyLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByAuthKeyLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByUserIdLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByUserIdLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserInfoLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserInfoLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/loginLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/loginLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/registerLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/registerLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/server/usercenterServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/server/usercenterServer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/svc/serviceContext.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/usercenter.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/usercenter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/usercenter/usercenter.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/usercenter/usercenter.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file://$USER_HOME$/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.11.windows-amd64" />
   <component name="Git.Settings">
@@ -19,10 +65,10 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -33,13 +79,18 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build go-zero-looklook/app/usercenter/api.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/usercenter/rpc.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.go.migrated.go.modules.settings": "true",
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "master",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "D:/go-zero-looklook",
+    "last_opened_file_path": "D:/go-zero-looklook/pkg",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -54,13 +105,43 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\go-zero-looklook\pkg" />
       <recent name="D:\go-zero-looklook" />
       <recent name="D:\go-zero-looklook\api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\go-zero-looklook\app\usercenter\model" />
       <recent name="D:\go-zero-looklook\app\usercenter" />
-      <recent name="D:\go-zero-looklook\desc\user" />
+      <recent name="D:\go-zero-looklook\app\usercenter\rpc\pb" />
+      <recent name="D:\go-zero-looklook\app\usercenter\rpc" />
+      <recent name="D:\go-zero-looklook\app\usercenter\api" />
     </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/usercenter/api">
+    <configuration name="go build go-zero-looklook/app/usercenter/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-zero-looklook" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-zero-looklook/app/usercenter/api" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/usercenter/api/usercenter.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build go-zero-looklook/app/usercenter/rpc" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-zero-looklook" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-zero-looklook/app/usercenter/rpc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/usercenter/rpc/usercenter.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/api" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/rpc" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>

@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"go-zero-looklook/internal/logic/user"
-	"go-zero-looklook/internal/svc"
-	"go-zero-looklook/internal/types"
+	"go-zero-looklook/app/usercenter/api/internal/logic/user"
+	"go-zero-looklook/app/usercenter/api/internal/svc"
+	"go-zero-looklook/app/usercenter/api/internal/types"
 )
 
 // register

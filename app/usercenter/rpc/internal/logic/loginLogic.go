@@ -3,8 +3,8 @@ package logic
 import (
 	"context"
 
-	"go-zero-looklook/internal/svc"
-	"go-zero-looklook/pb"
+	"go-zero-looklook/app/usercenter/rpc/internal/svc"
+	"go-zero-looklook/app/usercenter/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +24,6 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(in *pb.LoginReq) (*pb.LoginResp, error) {
-	// todo: add your logic here and delete this line
 
 	return &pb.LoginResp{}, nil
 }

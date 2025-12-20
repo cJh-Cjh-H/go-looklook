@@ -4,15 +4,15 @@ import (
 	"flag"
 	"fmt"
 
-	"go-zero-looklook/internal/config"
-	"go-zero-looklook/internal/handler"
-	"go-zero-looklook/internal/svc"
+	"go-zero-looklook/app/usercenter/api/internal/config"
+	"go-zero-looklook/app/usercenter/api/internal/handler"
+	"go-zero-looklook/app/usercenter/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"
 )
 
-var configFile = flag.String("f", "etc/usercenter.yaml", "the config file")
+var configFile = flag.String("f", "app/usercenter/api/etc/usercenter.yaml", "the config file")
 
 func main() {
 	flag.Parse()
