@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
-      <change afterPath="$PROJECT_DIR$/app/travel/api/desc/homestay/homestay.api" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/travel/api/desc/homestayBusiness/homestayBusiness.api" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/travel/api/desc/homestayComment/homestayComment.api" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/travel/api/desc/travel.api" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/travel/rpc/pb/1.proto" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/travel/rpc/pb/travel.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5ebf461b-6aa1-48c3-9771-862d8f055204.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5ebf461b-6aa1-48c3-9771-862d8f055204.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/desc/usercenter.api" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/desc/usercenter.api" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/etc/usercenter.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/etc/usercenter.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/etc/usercenter.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/etc/usercenter.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/model/homestayModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayModel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/goodBossLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/goodBossLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/guessListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/guessListLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
