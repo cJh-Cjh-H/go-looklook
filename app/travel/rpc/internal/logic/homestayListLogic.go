@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/Masterminds/squirrel"
+	"go-zero-looklook/app/travel/model"
 
 	"go-zero-looklook/app/travel/rpc/internal/svc"
 	"go-zero-looklook/app/travel/rpc/pb"
@@ -25,7 +27,17 @@ func NewHomestayListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Home
 
 // 民宿服务
 func (l *HomestayListLogic) HomestayList(in *pb.HomestayListReq) (*pb.HomestayListResp, error) {
-	// todo: add your logic here and delete this line
+	whereBuilder := l.svcCtx.HomestayActivityModel.SelectBuilder().Where(squirrel.Eq{
+		"row_type":   model.HomestayActivityPreferredType,
+		"row_status": model.HomestayActivityUpStatus,
+	})
+	homestays, err := l.svcCtx.HomestayModel.FindByActivity(
+		l.ctx,
+		model.HomestayActivityPreferredType,
+		model.HomestayActivityUpStatus,
+		in.Page,
+		in.PageSize,
+	)
 
 	return &pb.HomestayListResp{}, nil
 }

@@ -34,12 +34,18 @@ type (
 		FindPageListByIdDESC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Homestay, error)
 		FindPageListByIdASC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*Homestay, error)
 		TransDelete(ctx context.Context, session sqlx.Session, id int64) error
+		FindByActivity(ctx context.Context, preferredType string, status int64, page int64, size int64) ([]*Homestay, error)
 	}
 
 	customHomestayModel struct {
 		*defaultHomestayModel
 	}
 )
+
+func (m *defaultHomestayModel) FindByActivity(ctx context.Context, preferredType string, status int64, page int64, size int64) ([]*Homestay, error) {
+	
+	return nil, nil
+}
 
 func (m *defaultHomestayModel) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
 	return m.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {

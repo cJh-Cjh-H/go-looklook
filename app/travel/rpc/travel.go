@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"go-zero-looklook/pkg/interceptor/rpcserver"
 
 	"go-zero-looklook/app/travel/rpc/internal/config"
 	"go-zero-looklook/app/travel/rpc/internal/server"
@@ -33,6 +34,8 @@ func main() {
 		}
 	})
 	defer s.Stop()
+	//rpc log
+	s.AddUnaryInterceptors(rpcserver.LoggerInterceptor)
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()

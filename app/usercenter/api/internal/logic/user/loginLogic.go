@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"github.com/pkg/errors"
 	"go-zero-looklook/app/usercenter/model"
 	"go-zero-looklook/app/usercenter/rpc/usercenter"
 
@@ -33,7 +34,7 @@ func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err erro
 		AuthKey:  req.Mobile,
 	})
 	if err != nil {
-		return nil, err
+		return nil, errors.Wrapf(err, "LoginLogic.Login")
 	}
 
 	resp = &types.LoginResp{
