@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+package homestay;
+
+option go_package = "./homestay";
+
+// ========== 基础消息定义 ==========
+message BaseResp {
+  int64 code = 1;
+  string message = 2;
+  map<string, string> data = 3;
+}
+
+// ========== 民宿评论模块 ==========
+message HomestayComment {
+  int64 id = 1;
+  int64 homestayId = 2;
+  string content = 3;
+  double star = 4;
+  int64 userId = 5;
+  string nickname = 6;
+  string avatar = 7;
+}
+
+message CommentListReq {
+  int64 lastId = 1;
+  int64 pageSize = 2;
+}
+
+message CommentListResp {
+  BaseResp baseResp = 1;
+  repeated HomestayComment list = 2;
+}
+
+// ========== 民宿商家模块 ==========
+message HomestayBusinessBoss {
+  int64 id = 1;
+  int64 userId = 2;
+  string nickname = 3;
+  string avatar = 4;
+  string info = 5;  // 房东介绍
+  int64 rank = 6;   // 排名
+}
+
+message HomestayBusiness {
+  int64 id = 1;
+  string title = 2;      // 店铺名称
+  string info = 3;       // 店铺介绍
+  string tags = 4;       // 标签，多个用","分割
+  string cover = 5;      // 封面
+  double star = 6;       // 评分
+  int64 isFav = 7;       // 是否收藏
+  string headerImg = 8;  // 店招门头图片
+}
+
+message GoodBossReq {
+  // 空请求
+}
+
+message GoodBossResp {
+  BaseResp baseResp = 1;
+  repeated HomestayBusinessBoss list = 2;
+}
+
+message HomestayBusinessListInfo {
+  HomestayBusiness homestayBusiness = 1;
+  int64 sellMonth = 2;        // 月销售
+  int64 personConsume = 3;    // 个人消费
+}
+
+message HomestayBussinessListReq {
+  int64 lastId = 1;
+  int64 pageSize = 2;
+}
+
+message HomestayBussinessListResp {
+  BaseResp baseResp = 1;
+  repeated HomestayBusinessListInfo list = 2;
+}
+
+message HomestayBussinessDetailReq {
+  int64 id = 1;
+}
+
+message HomestayBussinessDetailResp {
+  BaseResp baseResp = 1;
+  HomestayBusinessBoss boss = 2;
+}
+
+// ========== 民宿模块 ==========
+message Homestay {
+  int64 id = 1;
+  string title = 2;
+  string subTitle = 3;
+  string banner = 4;
+  string info = 5;
+  int64 peopleNum = 6;           // 容纳人的数量
+  int64 homestayBusinessId = 7;  // 店铺id
+  int64 userId = 8;              // 房东id
+  int64 rowState = 9;            // 0:下架 1:上架
+  int64 rowType = 10;            // 售卖类型0：按房间出售 1:按人次出售
+  string foodInfo = 11;          // 餐食标准
+  double foodPrice = 12;         // 餐食价格
+  double homestayPrice = 13;     // 民宿价格
+  double marketHomestayPrice = 14; // 民宿市场价格
+}
+
+message BusinessListReq {
+  int64 lastId = 1;
+  int64 pageSize = 2;
+  int64 homestayBusinessId = 3;
+}
+
+message BusinessListResp {
+  BaseResp baseResp = 1;
+  repeated Homestay list = 2;
+}
+
+message HomestayListReq {
+  int64 page = 1;
+  int64 pageSize = 2;
+}
+
+message HomestayListResp {
+  BaseResp baseResp = 1;
+  repeated Homestay list = 2;
+}
+
+message GuessListReq {
+  // 空请求
+}
+
+message GuessListResp {
+  BaseResp baseResp = 1;
+  repeated Homestay list = 2;
+}
+
+message HomestayDetailReq {
+  int64 id = 1;
+}
+
+message HomestayDetailResp {
+  BaseResp baseResp = 1;
+  Homestay homestay = 2;
+}
+
+// ========== 服务定义 ==========
+service HomestayService {
+  // 民宿服务
+  rpc HomestayList(HomestayListReq) returns (HomestayListResp);
+  rpc BusinessList(BusinessListReq) returns (BusinessListResp);
+  rpc GuessList(GuessListReq) returns (GuessListResp);
+  rpc HomestayDetail(HomestayDetailReq) returns (HomestayDetailResp);
+
+  // 民宿商家服务
+  rpc GoodBoss(GoodBossReq) returns (GoodBossResp);
+  rpc HomestayBussinessList(HomestayBussinessListReq) returns (HomestayBussinessListResp);
+  rpc HomestayBussinessDetail(HomestayBussinessDetailReq) returns (HomestayBussinessDetailResp);
+
+  // 民宿评论服务
+  rpc CommentList(CommentListReq) returns (CommentListResp);
+}

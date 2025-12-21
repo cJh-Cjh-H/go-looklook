@@ -1,17 +1,17 @@
-Name: usercenter.rpc
-ListenOn: 0.0.0.0:1000
+Name: travel.rpc
+ListenOn: 0.0.0.0:1001
 Mode: dev
 JwtAuth:
   AccessSecret: "cjh090888"
   AccessExpire: 36000
 Etcd:
   Hosts:
-  - 139.9.177.213:2379
-  Key: usercenter.rpc
+    - 139.9.177.213:2379
+  Key: travel.rpc
 Redis:
   Host: "139.9.177.213:6379"
   Type: "node"
-  Key: usercenter-rpc
+  Key: travel.rpc
   Pass: ""
 DB:
   DataSource: "root:Mcjh0908.@tcp(139.9.177.213:3306)/LookLook?charset=utf8mb4&parseTime=true&loc=Local"

@@ -1,15 +1,22 @@
-Name: usercenter-api
+Name: travel-api
 Host: 0.0.0.0
-Port: 9990
-Log:
-  ServiceName: usercenter-api
-  Level: error
-
+Port: 9991
+Mode: dev
+#rpc
 UsercenterRpcConf:
   Etcd:
     Hosts:
       - 139.9.177.213:2379
     Key: usercenter.rpc
+TravelRpcConf:
+  Etcd:
+    Hosts:
+      - 139.9.177.213:2379
+    Key: travel.rpc
+
+Log:
+  ServiceName: travel-api
+  Level: error
 #jwt验证
 JwtAuth:
   AccessSecret: "cjh090888"

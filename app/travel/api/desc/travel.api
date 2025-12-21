@@ -1,0 +1,194 @@
+syntax = "v1"
+
+info (
+	title:   "旅游服务"
+	desc:    "旅游服务"
+	author:  "cjh"
+	email:   "1328479676@qq.com"
+	version: "v1"
+)
+
+//=====================================> travel-homestay v1 <=================================
+//民宿评论服务
+type HomestayComment {
+	Id         int64   `json:"id"`
+	HomestayId int64   `json:"homestayId"`
+	Content    string  `json:"content"`
+	Star       float64 `json:"star"`
+	UserId     int64   `json:"userId"`
+	Nickname   string  `json:"nickname"`
+	Avatar     string  `json:"avatar"`
+}
+
+type (
+	CommentListReq {
+		lastId   int64 `json:"lastId"`
+		pageSize int64 `json:"pageSize"`
+	}
+	CommentListResp {
+		List []HomestayComment `json:"list"`
+	}
+)
+
+//民宿店铺服务
+type HomestayBusinessBoss {
+	Id       int64  `json:"id"`
+	UserId   int64  `json:"userId"`
+	Nickname string `json:"nickname"`
+	Avatar   string `json:"avatar"`
+	Info     string `json:"info"` //房东介绍
+	Rank     int64  `json:"rank"` //排名
+}
+
+type HomestayBusiness {
+	Id        int64   `json:"id"`
+	Title     string  `json:"title"` //店铺名称
+	Info      string  `json:"info"` //店铺介绍
+	Tags      string  `json:"tags"` //标签，多个用“,”分割
+	Cover     string  `json:"cover"` //
+	Star      float64 `json:"star"`
+	IsFav     int64   `json:"isFav"`
+	HeaderImg string  `json:"headerImg"` //店招门头图片
+}
+
+type (
+	GoodBossReq  {}
+	GoodBossResp {
+		List []HomestayBusinessBoss `json:"list"`
+	}
+)
+
+type (
+	HomestayBusinessListInfo {
+		HomestayBusiness
+		SellMonth     int64 `json:"sellMonth"` //月销售
+		PersonConsume int64 `json:"personConsume"` //个人消费
+	}
+	HomestayBussinessListReq {
+		LastId   int64 `json:"lastId"`
+		PageSize int64 `json:"pageSize"`
+	}
+	HomestayBussinessListResp {
+		List []HomestayBusinessListInfo `json:"list"`
+	}
+)
+
+type (
+	HomestayBussinessDetailReq {
+		Id int64 `json:"id"`
+	}
+	HomestayBussinessDetailResp {
+		Boss HomestayBusinessBoss `json:"boss"`
+	}
+)
+
+//民宿服务
+type Homestay {
+	Id                  int64   `json:"id"`
+	Title               string  `json:"title"`
+	SubTitle            string  `json:"subTitle"`
+	Banner              string  `json:"banner"`
+	Info                string  `json:"info"`
+	PeopleNum           int64   `json:"peopleNum"` //容纳人的数量
+	HomestayBusinessId  int64   `json:"homestayBusinessId"` //店铺id
+	UserId              int64   `json:"userId"` //房东id
+	RowState            int64   `json:"rowState"` //0:下架 1:上架
+	RowType             int64   `json:"rowType"` //售卖类型0：按房间出售 1:按人次出售
+	FoodInfo            string  `json:"foodInfo"` //餐食标准
+	FoodPrice           float64 `json:"foodPrice"` //餐食价格
+	HomestayPrice       float64 `json:"homestayPrice"` //民宿价格
+	MarketHomestayPrice float64 `json:"marketHomestayPrice"` //民宿市场价格
+}
+
+type (
+	BusinessListReq {
+		LastId             int64 `json:"lastId"`
+		PageSize           int64 `json:"pageSize"`
+		HomestayBusinessId int64 `json:"homestayBusinessId"`
+	}
+	BusinessListResp {
+		List []Homestay `json:"list"`
+	}
+)
+
+type (
+	HomestayListReq {
+		Page     int64 `json:"page"`
+		PageSize int64 `json:"pageSize"`
+	}
+	HomestayListResp {
+		List []Homestay `json:"list"`
+	}
+)
+
+type (
+	GuessListReq  {}
+	GuessListResp {
+		List []Homestay `json:"list"`
+	}
+)
+
+type (
+	HomestayDetailReq {
+		Id int64 `json:"id"`
+	}
+	HomestayDetailResp {
+		Homestay Homestay `json:"homestay"`
+	}
+)
+
+//no need login
+@server (
+	prefix: travel/v1
+	group:  homestay
+)
+service travel {
+	@doc "homestay room list"
+	@handler homestayList
+	post /homestay/homestayList (HomestayListReq) returns (HomestayListResp)
+
+	@doc "boss all homestay room"
+	@handler businessList
+	post /homestay/businessList (BusinessListReq) returns (BusinessListResp)
+
+	@doc "guess homestay room"
+	@handler guessList
+	post /homestay/guessList (GuessListReq) returns (GuessListResp)
+
+	@doc "homestay room detail"
+	@handler homestayDetail
+	post /homestay/homestayDetail (HomestayDetailReq) returns (HomestayDetailResp)
+}
+
+//====================================> travel-homestayBusiness v1 <====================================
+//no need login
+@server (
+	prefix: travel/v1
+	group:  homestayBussiness
+)
+service travel {
+	@doc "good boss"
+	@handler goodBoss
+	post /homestayBussiness/goodBoss (GoodBossReq) returns (GoodBossResp)
+
+	@doc "business list"
+	@handler homestayBussinessList
+	post /homestayBussiness/homestayBussinessList (HomestayBussinessListReq) returns (HomestayBussinessListResp)
+
+	@doc "boss detail"
+	@handler homestayBussinessDetail
+	post /homestayBussiness/homestayBussinessDetail (HomestayBussinessDetailReq) returns (HomestayBussinessDetailResp)
+}
+
+//========================> homestay-homestayComment v1 <===================================
+//no need login
+@server (
+	prefix: travel/v1
+	group:  homestayComment
+)
+service travel {
+	@doc "homestay comment list"
+	@handler commentList
+	post /homestayComment/commentList (CommentListReq) returns (CommentListResp)
+}
+

@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
+      <change afterPath="$PROJECT_DIR$/app/travel/api/desc/homestay/homestay.api" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/travel/api/desc/homestayBusiness/homestayBusiness.api" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/travel/api/desc/homestayComment/homestayComment.api" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/travel/api/desc/travel.api" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/travel/rpc/pb/1.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/travel/rpc/pb/travel.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5ebf461b-6aa1-48c3-9771-862d8f055204.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/5ebf461b-6aa1-48c3-9771-862d8f055204.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/api/desc/usercenter.api" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/desc/usercenter.api" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/usercenter/api/etc/usercenter.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/etc/usercenter.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/detailLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/detailLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/loginLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/loginLogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/etc/usercenter.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/etc/usercenter.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserInfoLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserInfoLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/loginLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/loginLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/ctxdata/ctxData.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/ctxdata/ctxData.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +63,7 @@
     "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
     "git-widget-placeholder": "master",
     "go.import.settings.migrated": "true",
-    "last_opened_file_path": "D:/go-zero-looklook/pkg",
+    "last_opened_file_path": "D:/go-zero-looklook/app/travel/rpc",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -75,16 +78,18 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\go-zero-looklook\app\travel\rpc" />
+      <recent name="D:\go-zero-looklook\app\travel" />
       <recent name="D:\go-zero-looklook\pkg" />
       <recent name="D:\go-zero-looklook" />
       <recent name="D:\go-zero-looklook\api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\go-zero-looklook\app\travel\rpc\pb" />
+      <recent name="D:\go-zero-looklook\app\travel\api\desc" />
+      <recent name="D:\go-zero-looklook\app\travel\appi" />
       <recent name="D:\go-zero-looklook\app\usercenter\model" />
       <recent name="D:\go-zero-looklook\app\usercenter" />
-      <recent name="D:\go-zero-looklook\app\usercenter\rpc\pb" />
-      <recent name="D:\go-zero-looklook\app\usercenter\rpc" />
-      <recent name="D:\go-zero-looklook\app\usercenter\api" />
     </key>
   </component>
   <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/usercenter/rpc">
