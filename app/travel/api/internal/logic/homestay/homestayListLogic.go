@@ -25,7 +25,6 @@ func NewHomestayListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Home
 }
 
 func (l *HomestayListLogic) HomestayList(req *types.HomestayListReq) (resp *types.HomestayListResp, err error) {
-	// todo: add your logic here and delete this line
-
+	
 	return
 }
