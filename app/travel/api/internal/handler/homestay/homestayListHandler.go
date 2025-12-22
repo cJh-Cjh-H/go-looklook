@@ -9,7 +9,7 @@ import (
 	"go-zero-looklook/app/travel/api/internal/types"
 )
 
-// homestay room list
+// HomestayListHandler homestay room list
 func HomestayListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.HomestayListReq

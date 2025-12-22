@@ -2,6 +2,9 @@ package homestay
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
+	"go-zero-looklook/app/travel/rpc/homestayservice"
 
 	"go-zero-looklook/app/travel/api/internal/svc"
 	"go-zero-looklook/app/travel/api/internal/types"
@@ -25,7 +28,16 @@ func NewHomestayDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ho
 }
 
 func (l *HomestayDetailLogic) HomestayDetail(req *types.HomestayDetailReq) (resp *types.HomestayDetailResp, err error) {
-	// todo: add your logic here and delete this line
-
+	homestayDetail, err := l.svcCtx.HomestayRpc.HomestayDetail(l.ctx, &homestayservice.HomestayDetailReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return nil, errors.Wrapf(err, "Api.homestayDetailLogic.HomestayDetail.HomestayDetail")
+	}
+	var h types.Homestay
+	_ = copier.Copy(&h, homestayDetail.Homestay)
+	resp = &types.HomestayDetailResp{
+		Homestay: h,
+	}
 	return
 }

@@ -9,7 +9,7 @@ var ErrNotFound = sqlx.ErrNotFound
 var ErrNoRowsUpdate = errors.New("update db no rows change")
 
 // 民宿活动类型
-
+var HomestayActivitySeasonType = "season_discount"      //季节民宿
 var HomestayActivityPreferredType = "preferredHomestay" //优选民宿
 var HomestayActivityGoodBusiType = "goodBusiness"       //最佳房东
 

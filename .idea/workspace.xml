@@ -5,18 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
-      <change afterPath="$PROJECT_DIR$/app/travel/api/internal/convert/homestayList.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/etc/travel.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/etc/travel.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/travel/api/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/handler/homestay/homestayListHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/handler/homestay/homestayListHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/homestayDetailLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/homestayDetailLogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/homestayListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/homestayListLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/svc/serviceContext.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/travel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/travel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/travel/model/homestayModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/travel/model/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/vars.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/etc/travel.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/etc/travel.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/homestayDetailLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/homestayDetailLogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/homestayListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/homestayListLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/svc/serviceContext.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/travel/rpc/travel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/travel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/loginLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/api/internal/logic/user/loginLogic.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +57,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build go-zero-looklook/app/travel/api.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/travel/rpc.executor": "Run",
     "Go Build.go build go-zero-looklook/app/usercenter/api.executor": "Run",
     "Go Build.go build go-zero-looklook/app/usercenter/rpc.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -68,7 +73,8 @@
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "D:/go-zero-looklook/main.go"
+    "onboarding.tips.debug.path": "D:/go-zero-looklook/main.go",
+    "run.configurations.included.in.services": "true"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -93,7 +99,32 @@
       <recent name="D:\go-zero-looklook\app\usercenter\model" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/usercenter/rpc">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="GoApplicationRunConfiguration" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/travel/api">
+    <configuration name="go build go-zero-looklook/app/travel/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-zero-looklook" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-zero-looklook/app/travel/api" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/travel/api/travel.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build go-zero-looklook/app/travel/rpc" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-zero-looklook" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-zero-looklook/app/travel/rpc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/travel/rpc/travel.go" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build go-zero-looklook/app/usercenter/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="go-zero-looklook" />
       <working_directory value="$PROJECT_DIR$" />
@@ -114,6 +145,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build go-zero-looklook/app/travel/api" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/travel/rpc" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/rpc" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/api" />
       </list>

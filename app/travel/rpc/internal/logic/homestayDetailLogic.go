@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
 
 	"go-zero-looklook/app/travel/rpc/internal/svc"
 	"go-zero-looklook/app/travel/rpc/pb"
@@ -24,7 +26,14 @@ func NewHomestayDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ho
 }
 
 func (l *HomestayDetailLogic) HomestayDetail(in *pb.HomestayDetailReq) (*pb.HomestayDetailResp, error) {
-	// todo: add your logic here and delete this line
+	homestay, err := l.svcCtx.HomestayModel.FindOne(l.ctx, in.Id)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Rpc.HomestayDetailLogic FindOne")
+	}
+	h := &pb.Homestay{}
+	_ = copier.Copy(&h, homestay)
 
-	return &pb.HomestayDetailResp{}, nil
+	return &pb.HomestayDetailResp{
+		Homestay: h,
+	}, nil
 }

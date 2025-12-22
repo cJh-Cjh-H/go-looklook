@@ -3,12 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"go-zero-looklook/pkg/interceptor/rpcserver"
-
 	"go-zero-looklook/app/travel/rpc/internal/config"
 	"go-zero-looklook/app/travel/rpc/internal/server"
 	"go-zero-looklook/app/travel/rpc/internal/svc"
 	"go-zero-looklook/app/travel/rpc/pb"
+	"go-zero-looklook/pkg/interceptor/rpcserver"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -17,7 +16,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/travel.yaml", "the config file")
+var configFile = flag.String("f", "app/travel/rpc/etc/travel.yaml", "the config file")
 
 func main() {
 	flag.Parse()

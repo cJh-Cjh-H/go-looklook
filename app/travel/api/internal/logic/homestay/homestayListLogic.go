@@ -33,7 +33,7 @@ func (l *HomestayListLogic) HomestayList(req *types.HomestayListReq) (resp *type
 		PageSize: req.PageSize,
 	})
 	if err != nil {
-		return nil, errors.Wrapf(err, "HomestayListLogic.HomestayList")
+		return nil, errors.Wrapf(err, "Api.HomestayListLogic.HomestayList")
 	}
 	list := make([]types.Homestay, len(rpcResp.List))
 	for i, item := range rpcResp.List {

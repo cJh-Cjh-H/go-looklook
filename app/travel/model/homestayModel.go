@@ -10,6 +10,7 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"go-zero-looklook/app/usercenter/model"
 	"go-zero-looklook/pkg/globalkey"
+	"strings"
 	"time"
 )
 
@@ -34,7 +35,7 @@ type (
 		FindPageListByIdDESC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Homestay, error)
 		FindPageListByIdASC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*Homestay, error)
 		TransDelete(ctx context.Context, session sqlx.Session, id int64) error
-		FindByActivity(ctx context.Context, preferredType string, status int64, page int64, size int64) ([]*Homestay, error)
+		SelectBuilderWithJoin(asTableName string, joinType string, joinTable string, joinCondition string, whereCondition string, args ...interface{}) squirrel.SelectBuilder
 	}
 
 	customHomestayModel struct {
@@ -42,9 +43,33 @@ type (
 	}
 )
 
-func (m *defaultHomestayModel) FindByActivity(ctx context.Context, preferredType string, status int64, page int64, size int64) ([]*Homestay, error) {
-	
-	return nil, nil
+func (m *defaultHomestayModel) SelectBuilderWithJoin(
+	asTableName string,
+	joinType string,       // JOIN 类型：INNER、LEFT、RIGHT
+	joinTable string,      // 要 JOIN 的表名
+	joinCondition string,  // JOIN 条件
+	whereCondition string, // WHERE 条件
+	args ...interface{},   // 参数
+) squirrel.SelectBuilder {
+
+	baseQuery := squirrel.Select(fmt.Sprintf("%s.*", asTableName)).
+		From(fmt.Sprintf("%s %s", m.table, asTableName))
+
+	// 根据 JOIN 类型构建不同的 JOIN
+	switch strings.ToUpper(joinType) {
+	case "LEFT", "LEFT JOIN":
+		baseQuery = baseQuery.LeftJoin(fmt.Sprintf("%s ON %s", joinTable, joinCondition))
+	case "RIGHT", "RIGHT JOIN":
+		baseQuery = baseQuery.RightJoin(fmt.Sprintf("%s ON %s", joinTable, joinCondition))
+	default: // INNER JOIN
+		baseQuery = baseQuery.Join(fmt.Sprintf("%s ON %s", joinTable, joinCondition))
+	}
+
+	if whereCondition != "" {
+		baseQuery = baseQuery.Where(whereCondition, args...)
+	}
+
+	return baseQuery
 }
 
 func (m *defaultHomestayModel) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
@@ -188,7 +213,7 @@ func (m *defaultHomestayModel) FindAll(ctx context.Context, builder squirrel.Sel
 // FindPageListByPage 分页查询的通用方法
 func (m *defaultHomestayModel) FindPageListByPage(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, error) {
 
-	builder = builder.Columns(homestayRows)
+	//builder = builder.Columns(homestayRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -201,7 +226,8 @@ func (m *defaultHomestayModel) FindPageListByPage(ctx context.Context, builder s
 	}
 	offset := (page - 1) * pageSize
 
-	query, values, err := builder.Where("del_state = ?", globalkey.DelStateNo).Offset(uint64(offset)).Limit(uint64(pageSize)).ToSql()
+	//query, values, err := builder.Where("del_state = ?", globalkey.DelStateNo).Offset(uint64(offset)).Limit(uint64(pageSize)).ToSql()
+	query, values, err := builder.Offset(uint64(offset)).Limit(uint64(pageSize)).ToSql()
 	if err != nil {
 		return nil, err
 	}

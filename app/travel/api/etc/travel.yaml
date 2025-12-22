@@ -17,7 +17,3 @@ TravelRpcConf:
 Log:
   ServiceName: travel-api
   Level: error
-#jwt验证
-JwtAuth:
-  AccessSecret: "cjh090888"
-  AccessExpire: 36000
