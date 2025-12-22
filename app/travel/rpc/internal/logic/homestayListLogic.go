@@ -27,7 +27,7 @@ func NewHomestayListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Home
 	}
 }
 
-// 民宿服务
+// HomestayList  民宿服务
 func (l *HomestayListLogic) HomestayList(in *pb.HomestayListReq) (*pb.HomestayListResp, error) {
 	//获取join查询的builder
 	builderJoin := l.svcCtx.HomestayModel.SelectBuilderWithJoin(

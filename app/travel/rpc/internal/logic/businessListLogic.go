@@ -24,7 +24,6 @@ func NewBusinessListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Busi
 }
 
 func (l *BusinessListLogic) BusinessList(in *pb.BusinessListReq) (*pb.BusinessListResp, error) {
-	// todo: add your logic here and delete this line
 
 	return &pb.BusinessListResp{}, nil
 }

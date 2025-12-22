@@ -2,6 +2,9 @@ package homestay
 
 import (
 	"context"
+	"github.com/pkg/errors"
+	"go-zero-looklook/app/travel/api/internal/convert"
+	"go-zero-looklook/app/travel/rpc/homestayservice"
 
 	"go-zero-looklook/app/travel/api/internal/svc"
 	"go-zero-looklook/app/travel/api/internal/types"
@@ -25,7 +28,16 @@ func NewGuessListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GuessLi
 }
 
 func (l *GuessListLogic) GuessList(req *types.GuessListReq) (resp *types.GuessListResp, err error) {
-	// todo: add your logic here and delete this line
-
+	rpcResp, err := l.svcCtx.HomestayRpc.GuessList(l.ctx, &homestayservice.GuessListReq{})
+	if err != nil {
+		return nil, errors.Wrapf(err, "HomestayRpc.GuessList")
+	}
+	list := make([]types.Homestay, len(rpcResp.List))
+	for i, item := range rpcResp.List {
+		list[i] = convert.ConvertRpcHomestayToApiHomestay(item)
+	}
+	resp = &types.GuessListResp{
+		List: list,
+	}
 	return
 }

@@ -36,6 +36,7 @@ type (
 		FindPageListByIdASC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*Homestay, error)
 		TransDelete(ctx context.Context, session sqlx.Session, id int64) error
 		SelectBuilderWithJoin(asTableName string, joinType string, joinTable string, joinCondition string, whereCondition string, args ...interface{}) squirrel.SelectBuilder
+		FindPageDIY(ctx context.Context, limit int64) ([]*Homestay, error)
 	}
 
 	customHomestayModel struct {
@@ -43,6 +44,37 @@ type (
 	}
 )
 
+func (m *defaultHomestayModel) FindPageDIY(ctx context.Context, limit int64) ([]*Homestay, error) {
+	s := `SELECT
+	h.*
+		FROM homestay h
+	LEFT JOIN (
+		SELECT a.data_id, COUNT(*) AS activity_count
+	FROM homestay_activity a
+	WHERE a.row_status = 1 AND a.del_state=0
+	GROUP BY a.data_id
+	) ha ON h.id = ha.data_id
+	LEFT JOIN (
+		SELECT c.homestay_id,
+		AVG(CAST(c.star->>'$.service' AS DECIMAL(10,2))) as avg
+	FROM homestay_comment c
+	WHERE  c.del_state = 0
+	GROUP BY c.homestay_id
+	) hc ON hc.homestay_id = h.id
+	WHERE h.row_state = 1 AND h.del_state=0
+	ORDER BY
+	COALESCE(ha.activity_count, 0) DESC,
+		COALESCE(CAST(hc.avg AS DECIMAL(10,2)), 0) DESC
+	LIMIT ? ;
+`
+	var resp []*Homestay
+	err := m.QueryRowsNoCache(&resp, s, limit)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Model.FindPageDIY.QueryRowNoCache")
+	}
+	return resp, err
+
+}
 func (m *defaultHomestayModel) SelectBuilderWithJoin(
 	asTableName string,
 	joinType string,       // JOIN 类型：INNER、LEFT、RIGHT
