@@ -2,6 +2,9 @@ package homestay
 
 import (
 	"context"
+	"github.com/pkg/errors"
+	"go-zero-looklook/app/travel/api/internal/convert"
+	"go-zero-looklook/app/travel/rpc/homestayservice"
 
 	"go-zero-looklook/app/travel/api/internal/svc"
 	"go-zero-looklook/app/travel/api/internal/types"
@@ -25,7 +28,21 @@ func NewBusinessListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Busi
 }
 
 func (l *BusinessListLogic) BusinessList(req *types.BusinessListReq) (resp *types.BusinessListResp, err error) {
-	// todo: add your logic here and delete this line
+	rpcResp, err := l.svcCtx.HomestayRpc.BusinessList(l.ctx, &homestayservice.BusinessListReq{
+		LastId:             req.LastId,
+		PageSize:           req.PageSize,
+		HomestayBusinessId: req.HomestayBusinessId,
+	})
+	if err != nil {
+		return nil, errors.Wrapf(err, "HomestayRpc.GuessList")
+	}
+	list := make([]types.Homestay, len(rpcResp.List))
+	for i, item := range rpcResp.List {
+		list[i] = convert.ConvertRpcHomestayToApiHomestay(item)
+	}
+	resp = &types.BusinessListResp{
+		List: list,
+	}
 
 	return
 }

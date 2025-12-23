@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/guessListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/guessListLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/businessListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/businessListLogic.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/travel/model/homestayModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayModel.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/businessListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/businessListLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/guessListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/guessListLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/homestayListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/homestayListLogic.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,35 +43,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "Go Build.go build go-zero-looklook/app/travel/api.executor": "Run",
-    "Go Build.go build go-zero-looklook/app/travel/rpc.executor": "Run",
-    "Go Build.go build go-zero-looklook/app/usercenter/api.executor": "Run",
-    "Go Build.go build go-zero-looklook/app/usercenter/rpc.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "git-widget-placeholder": "master",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "D:/go-zero-looklook/app/travel/rpc",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "D:/go-zero-looklook/main.go",
-    "run.configurations.included.in.services": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;Go Build.go build go-zero-looklook/app/travel/api.executor&quot;: &quot;Run&quot;,
+    &quot;Go Build.go build go-zero-looklook/app/travel/rpc.executor&quot;: &quot;Run&quot;,
+    &quot;Go Build.go build go-zero-looklook/app/usercenter/api.executor&quot;: &quot;Run&quot;,
+    &quot;Go Build.go build go-zero-looklook/app/usercenter/rpc.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/go-zero-looklook/app/travel/rpc&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;D:/go-zero-looklook/main.go&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql",
-      "mysql_aurora"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;,
+      &quot;mysql_aurora&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\go-zero-looklook\app\travel\rpc" />
@@ -97,7 +95,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/travel/rpc">
+  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/travel/api">
     <configuration name="go build go-zero-looklook/app/travel/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="go-zero-looklook" />
       <working_directory value="$PROJECT_DIR$" />
@@ -136,8 +134,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build go-zero-looklook/app/travel/rpc" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/travel/api" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/travel/rpc" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/rpc" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/api" />
       </list>

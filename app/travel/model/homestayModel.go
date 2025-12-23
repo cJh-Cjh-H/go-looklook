@@ -77,11 +77,11 @@ func (m *defaultHomestayModel) FindPageDIY(ctx context.Context, limit int64) ([]
 }
 func (m *defaultHomestayModel) SelectBuilderWithJoin(
 	asTableName string,
-	joinType string,       // JOIN 类型：INNER、LEFT、RIGHT
-	joinTable string,      // 要 JOIN 的表名
-	joinCondition string,  // JOIN 条件
+	joinType string, // JOIN 类型：INNER、LEFT、RIGHT
+	joinTable string, // 要 JOIN 的表名
+	joinCondition string, // JOIN 条件
 	whereCondition string, // WHERE 条件
-	args ...interface{},   // 参数
+	args ...interface{}, // 参数
 ) squirrel.SelectBuilder {
 
 	baseQuery := squirrel.Select(fmt.Sprintf("%s.*", asTableName)).
