@@ -17,3 +17,7 @@ var HomestayActivityGoodBusiType = "goodBusiness"       //最佳房东
 
 var HomestayActivityDownStatus int64 = 0 //下架
 var HomestayActivityUpStatus int64 = 1   //上架
+type HomestayBusinessBoss struct {
+	Id     int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId int64 `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`
+}

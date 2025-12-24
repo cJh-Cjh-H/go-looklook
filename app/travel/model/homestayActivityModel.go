@@ -21,19 +21,20 @@ type (
 	HomestayActivityModel interface {
 		homestayActivityModel
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
-		TransInsert(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error)
-		TransUpdate(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error)
-		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *Homestay) error
+		TransInsert(ctx context.Context, session sqlx.Session, data *HomestayActivity) (sql.Result, error)
+		TransUpdate(ctx context.Context, session sqlx.Session, data *HomestayActivity) (sql.Result, error)
+		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *HomestayActivity) error
 		SelectBuilder() squirrel.SelectBuilder
-		DeleteSoft(ctx context.Context, session sqlx.Session, data *Homestay) error
+		DeleteSoft(ctx context.Context, session sqlx.Session, data *HomestayActivity) error
 		FindSum(ctx context.Context, sumBuilder squirrel.SelectBuilder, field string) (float64, error)
 		FindCount(ctx context.Context, countBuilder squirrel.SelectBuilder, field string) (int64, error)
-		FindAll(ctx context.Context, rowBuilder squirrel.SelectBuilder, orderBy string) ([]*Homestay, error)
-		FindPageListByPage(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, error)
-		FindPageListByPageWithTotal(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, int64, error)
-		FindPageListByIdDESC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Homestay, error)
-		FindPageListByIdASC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*Homestay, error)
+		FindAll(ctx context.Context, rowBuilder squirrel.SelectBuilder, orderBy string) ([]*HomestayActivity, error)
+		FindPageListByPage(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayActivity, error)
+		FindPageListByPageWithTotal(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayActivity, int64, error)
+		FindPageListByIdDESC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*HomestayActivity, error)
+		FindPageListByIdASC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*HomestayActivity, error)
 		TransDelete(ctx context.Context, session sqlx.Session, id int64) error
+		FindDiy(ctx context.Context, l int) ([]*HomestayBusinessBoss, error)
 	}
 
 	customHomestayActivityModel struct {
@@ -41,31 +42,51 @@ type (
 	}
 )
 
+func (m *defaultHomestayActivityModel) FindDiy(ctx context.Context, l int) ([]*HomestayBusinessBoss, error) {
+	s := `SELECT
+    ha.id,s.user_id
+FROM homestay_activity ha
+         LEFT JOIN (
+    SELECT h.user_id,h.id
+    FROM homestay h
+    WHERE h.row_state = 1 AND h.del_state=0
+) as s  ON s.id = ha.data_id
+WHERE ha.row_status = 1 AND ha.del_state=0 AND ha.row_type='goodBusiness'
+LIMIT ? ;`
+	var resp []*HomestayBusinessBoss
+
+	err := m.QueryRowsNoCache(&resp, s, l)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Model.defaultHomestayActivityModel.FindDiy.QueryRowNoCache")
+	}
+	return resp, err
+}
 func (m *defaultHomestayActivityModel) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
 	return m.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
 		return fn(ctx, session)
 	})
 }
 
-func (m *defaultHomestayActivityModel) TransInsert(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error) {
+func (m *defaultHomestayActivityModel) TransInsert(ctx context.Context, session sqlx.Session, data *HomestayActivity) (sql.Result, error) {
 	data.DeleteTime = time.Unix(0, 0)
 	data.DelState = globalkey.DelStateNo
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, data.Id)
+	looklookTravelHomestayActivityIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayActivityIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayRowsExpectAutoSet)
-		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice)
-	}, looklookTravelHomestayIdKey)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?)", m.table, homestayActivityRowsExpectAutoSet)
+
+		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.RowType, data.DataId, data.RowStatus, data.Version)
+	}, looklookTravelHomestayActivityIdKey)
 }
 
-func (m *defaultHomestayActivityModel) TransUpdate(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error) {
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, data.Id)
+func (m *defaultHomestayActivityModel) TransUpdate(ctx context.Context, session sqlx.Session, data *HomestayActivity) (sql.Result, error) {
+	looklookTravelHomestayActivityIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayActivityIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayRowsWithPlaceHolder)
-		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id)
-	}, looklookTravelHomestayIdKey)
+		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayActivityRowsWithPlaceHolder)
+		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.RowType, data.DataId, data.RowStatus, data.Version, data.Id)
+	}, looklookTravelHomestayActivityIdKey)
 }
 
-func (m *defaultHomestayActivityModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *Homestay) error {
+func (m *defaultHomestayActivityModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *HomestayActivity) error {
 
 	oldVersion := data.Version
 	data.Version += 1
@@ -73,14 +94,14 @@ func (m *defaultHomestayActivityModel) UpdateWithVersion(ctx context.Context, se
 	var sqlResult sql.Result
 	var err error
 
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, data.Id)
+	looklookTravelHomestayActivityIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayActivityIdPrefix, data.Id)
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayRowsWithPlaceHolder)
+		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayActivityRowsWithPlaceHolder)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion)
+			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.RowType, data.DataId, data.RowStatus, data.Version, data.Id, oldVersion)
 		}
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion)
-	}, looklookTravelHomestayIdKey)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.RowType, data.DataId, data.RowStatus, data.Version, data.Id, oldVersion)
+	}, looklookTravelHomestayActivityIdKey)
 	if err != nil {
 		return err
 	}
@@ -96,7 +117,7 @@ func (m *defaultHomestayActivityModel) UpdateWithVersion(ctx context.Context, se
 }
 
 // DeleteSoft 软删除
-func (m *defaultHomestayActivityModel) DeleteSoft(ctx context.Context, session sqlx.Session, data *Homestay) error {
+func (m *defaultHomestayActivityModel) DeleteSoft(ctx context.Context, session sqlx.Session, data *HomestayActivity) error {
 	data.DelState = globalkey.DelStateYes
 	data.DeleteTime = time.Now()
 	if err := m.UpdateWithVersion(ctx, session, data); err != nil {
@@ -154,9 +175,9 @@ func (m *defaultHomestayActivityModel) FindCount(ctx context.Context, builder sq
 }
 
 // FindAll 通用的查询所有记录方法
-func (m *defaultHomestayActivityModel) FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*Homestay, error) {
+func (m *defaultHomestayActivityModel) FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*HomestayActivity, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayActivityRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -169,7 +190,7 @@ func (m *defaultHomestayActivityModel) FindAll(ctx context.Context, builder squi
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayActivity
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -180,9 +201,9 @@ func (m *defaultHomestayActivityModel) FindAll(ctx context.Context, builder squi
 }
 
 // FindPageListByPage 分页查询的通用方法
-func (m *defaultHomestayActivityModel) FindPageListByPage(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, error) {
+func (m *defaultHomestayActivityModel) FindPageListByPage(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayActivity, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayActivityRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -200,7 +221,7 @@ func (m *defaultHomestayActivityModel) FindPageListByPage(ctx context.Context, b
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayActivity
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -211,14 +232,14 @@ func (m *defaultHomestayActivityModel) FindPageListByPage(ctx context.Context, b
 }
 
 // FindPageListByPageWithTotal 分页查询的通用方法（带总数）
-func (m *defaultHomestayActivityModel) FindPageListByPageWithTotal(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, int64, error) {
+func (m *defaultHomestayActivityModel) FindPageListByPageWithTotal(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayActivity, int64, error) {
 
 	total, err := m.FindCount(ctx, builder, "id")
 	if err != nil {
 		return nil, 0, err
 	}
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayActivityRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -236,7 +257,7 @@ func (m *defaultHomestayActivityModel) FindPageListByPageWithTotal(ctx context.C
 		return nil, total, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayActivity
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -247,9 +268,9 @@ func (m *defaultHomestayActivityModel) FindPageListByPageWithTotal(ctx context.C
 }
 
 // FindPageListByIdDESC 通过Id分页查询并降序排列
-func (m *defaultHomestayActivityModel) FindPageListByIdDESC(ctx context.Context, builder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Homestay, error) {
+func (m *defaultHomestayActivityModel) FindPageListByIdDESC(ctx context.Context, builder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*HomestayActivity, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayActivityRows)
 
 	if preMinId > 0 {
 		builder = builder.Where(" id < ? ", preMinId)
@@ -260,7 +281,7 @@ func (m *defaultHomestayActivityModel) FindPageListByIdDESC(ctx context.Context,
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayActivity
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -271,9 +292,9 @@ func (m *defaultHomestayActivityModel) FindPageListByIdDESC(ctx context.Context,
 }
 
 // FindPageListByIdASC 通过Id分页查询并降序排列
-func (m *defaultHomestayActivityModel) FindPageListByIdASC(ctx context.Context, builder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*Homestay, error) {
+func (m *defaultHomestayActivityModel) FindPageListByIdASC(ctx context.Context, builder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*HomestayActivity, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayActivityRows)
 
 	if preMaxId > 0 {
 		builder = builder.Where(" id > ? ", preMaxId)
@@ -284,7 +305,7 @@ func (m *defaultHomestayActivityModel) FindPageListByIdASC(ctx context.Context, 
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayActivity
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:

@@ -170,7 +170,7 @@ func (m *defaultHomestayBusinessModel) FindCount(ctx context.Context, builder sq
 // FindAll 通用的查询所有记录方法
 func (m *defaultHomestayBusinessModel) FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*HomestayBusiness, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayBusinessRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -196,7 +196,7 @@ func (m *defaultHomestayBusinessModel) FindAll(ctx context.Context, builder squi
 // FindPageListByPage 分页查询的通用方法
 func (m *defaultHomestayBusinessModel) FindPageListByPage(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayBusiness, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayBusinessRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -232,7 +232,7 @@ func (m *defaultHomestayBusinessModel) FindPageListByPageWithTotal(ctx context.C
 		return nil, 0, err
 	}
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayBusinessRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -287,7 +287,7 @@ func (m *defaultHomestayBusinessModel) FindPageListByIdDESC(ctx context.Context,
 // FindPageListByIdASC 通过Id分页查询并降序排列
 func (m *defaultHomestayBusinessModel) FindPageListByIdASC(ctx context.Context, builder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*HomestayBusiness, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayBusinessRows)
 
 	if preMaxId > 0 {
 		builder = builder.Where(" id > ? ", preMaxId)

@@ -4,6 +4,7 @@
     <inspection_tool class="GoDfaErrorMayBeNotNil" enabled="true" level="WARNING" enabled_by_default="true">
       <methods>
         <method importPath="go-zero-looklook/app/travel/rpc/homestayservice" receiver="HomestayService" name="HomestayBusinessDetail" />
+        <method importPath="go-zero-looklook/app/travel/rpc/homestayservice" receiver="HomestayService" name="GoodBoss" />
       </methods>
     </inspection_tool>
   </profile>
