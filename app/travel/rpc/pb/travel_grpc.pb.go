@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	HomestayService_HomestayList_FullMethodName            = "/homestay.HomestayService/HomestayList"
-	HomestayService_BusinessList_FullMethodName            = "/homestay.HomestayService/BusinessList"
-	HomestayService_GuessList_FullMethodName               = "/homestay.HomestayService/GuessList"
-	HomestayService_HomestayDetail_FullMethodName          = "/homestay.HomestayService/HomestayDetail"
-	HomestayService_GoodBoss_FullMethodName                = "/homestay.HomestayService/GoodBoss"
-	HomestayService_HomestayBussinessList_FullMethodName   = "/homestay.HomestayService/HomestayBussinessList"
-	HomestayService_HomestayBussinessDetail_FullMethodName = "/homestay.HomestayService/HomestayBussinessDetail"
-	HomestayService_CommentList_FullMethodName             = "/homestay.HomestayService/CommentList"
+	HomestayService_HomestayList_FullMethodName           = "/homestay.HomestayService/HomestayList"
+	HomestayService_BusinessList_FullMethodName           = "/homestay.HomestayService/BusinessList"
+	HomestayService_GuessList_FullMethodName              = "/homestay.HomestayService/GuessList"
+	HomestayService_HomestayDetail_FullMethodName         = "/homestay.HomestayService/HomestayDetail"
+	HomestayService_GoodBoss_FullMethodName               = "/homestay.HomestayService/GoodBoss"
+	HomestayService_HomestayBusinessList_FullMethodName   = "/homestay.HomestayService/HomestayBusinessList"
+	HomestayService_HomestayBusinessDetail_FullMethodName = "/homestay.HomestayService/HomestayBusinessDetail"
+	HomestayService_CommentList_FullMethodName            = "/homestay.HomestayService/CommentList"
 )
 
 // HomestayServiceClient is the client API for HomestayService service.
@@ -42,8 +42,8 @@ type HomestayServiceClient interface {
 	HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 	// 民宿商家服务
 	GoodBoss(ctx context.Context, in *GoodBossReq, opts ...grpc.CallOption) (*GoodBossResp, error)
-	HomestayBussinessList(ctx context.Context, in *HomestayBussinessListReq, opts ...grpc.CallOption) (*HomestayBussinessListResp, error)
-	HomestayBussinessDetail(ctx context.Context, in *HomestayBussinessDetailReq, opts ...grpc.CallOption) (*HomestayBussinessDetailResp, error)
+	HomestayBusinessList(ctx context.Context, in *HomestayBusinessListReq, opts ...grpc.CallOption) (*HomestayBusinessListResp, error)
+	HomestayBusinessDetail(ctx context.Context, in *HomestayBusinessDetailReq, opts ...grpc.CallOption) (*HomestayBusinessDetailResp, error)
 	// 民宿评论服务
 	CommentList(ctx context.Context, in *CommentListReq, opts ...grpc.CallOption) (*CommentListResp, error)
 }
@@ -106,20 +106,20 @@ func (c *homestayServiceClient) GoodBoss(ctx context.Context, in *GoodBossReq, o
 	return out, nil
 }
 
-func (c *homestayServiceClient) HomestayBussinessList(ctx context.Context, in *HomestayBussinessListReq, opts ...grpc.CallOption) (*HomestayBussinessListResp, error) {
+func (c *homestayServiceClient) HomestayBusinessList(ctx context.Context, in *HomestayBusinessListReq, opts ...grpc.CallOption) (*HomestayBusinessListResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HomestayBussinessListResp)
-	err := c.cc.Invoke(ctx, HomestayService_HomestayBussinessList_FullMethodName, in, out, cOpts...)
+	out := new(HomestayBusinessListResp)
+	err := c.cc.Invoke(ctx, HomestayService_HomestayBusinessList_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *homestayServiceClient) HomestayBussinessDetail(ctx context.Context, in *HomestayBussinessDetailReq, opts ...grpc.CallOption) (*HomestayBussinessDetailResp, error) {
+func (c *homestayServiceClient) HomestayBusinessDetail(ctx context.Context, in *HomestayBusinessDetailReq, opts ...grpc.CallOption) (*HomestayBusinessDetailResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HomestayBussinessDetailResp)
-	err := c.cc.Invoke(ctx, HomestayService_HomestayBussinessDetail_FullMethodName, in, out, cOpts...)
+	out := new(HomestayBusinessDetailResp)
+	err := c.cc.Invoke(ctx, HomestayService_HomestayBusinessDetail_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -149,8 +149,8 @@ type HomestayServiceServer interface {
 	HomestayDetail(context.Context, *HomestayDetailReq) (*HomestayDetailResp, error)
 	// 民宿商家服务
 	GoodBoss(context.Context, *GoodBossReq) (*GoodBossResp, error)
-	HomestayBussinessList(context.Context, *HomestayBussinessListReq) (*HomestayBussinessListResp, error)
-	HomestayBussinessDetail(context.Context, *HomestayBussinessDetailReq) (*HomestayBussinessDetailResp, error)
+	HomestayBusinessList(context.Context, *HomestayBusinessListReq) (*HomestayBusinessListResp, error)
+	HomestayBusinessDetail(context.Context, *HomestayBusinessDetailReq) (*HomestayBusinessDetailResp, error)
 	// 民宿评论服务
 	CommentList(context.Context, *CommentListReq) (*CommentListResp, error)
 	mustEmbedUnimplementedHomestayServiceServer()
@@ -178,11 +178,11 @@ func (UnimplementedHomestayServiceServer) HomestayDetail(context.Context, *Homes
 func (UnimplementedHomestayServiceServer) GoodBoss(context.Context, *GoodBossReq) (*GoodBossResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GoodBoss not implemented")
 }
-func (UnimplementedHomestayServiceServer) HomestayBussinessList(context.Context, *HomestayBussinessListReq) (*HomestayBussinessListResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HomestayBussinessList not implemented")
+func (UnimplementedHomestayServiceServer) HomestayBusinessList(context.Context, *HomestayBusinessListReq) (*HomestayBusinessListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomestayBusinessList not implemented")
 }
-func (UnimplementedHomestayServiceServer) HomestayBussinessDetail(context.Context, *HomestayBussinessDetailReq) (*HomestayBussinessDetailResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HomestayBussinessDetail not implemented")
+func (UnimplementedHomestayServiceServer) HomestayBusinessDetail(context.Context, *HomestayBusinessDetailReq) (*HomestayBusinessDetailResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HomestayBusinessDetail not implemented")
 }
 func (UnimplementedHomestayServiceServer) CommentList(context.Context, *CommentListReq) (*CommentListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CommentList not implemented")
@@ -298,38 +298,38 @@ func _HomestayService_GoodBoss_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HomestayService_HomestayBussinessList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HomestayBussinessListReq)
+func _HomestayService_HomestayBusinessList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HomestayBusinessListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HomestayServiceServer).HomestayBussinessList(ctx, in)
+		return srv.(HomestayServiceServer).HomestayBusinessList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HomestayService_HomestayBussinessList_FullMethodName,
+		FullMethod: HomestayService_HomestayBusinessList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HomestayServiceServer).HomestayBussinessList(ctx, req.(*HomestayBussinessListReq))
+		return srv.(HomestayServiceServer).HomestayBusinessList(ctx, req.(*HomestayBusinessListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HomestayService_HomestayBussinessDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HomestayBussinessDetailReq)
+func _HomestayService_HomestayBusinessDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HomestayBusinessDetailReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HomestayServiceServer).HomestayBussinessDetail(ctx, in)
+		return srv.(HomestayServiceServer).HomestayBusinessDetail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HomestayService_HomestayBussinessDetail_FullMethodName,
+		FullMethod: HomestayService_HomestayBusinessDetail_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HomestayServiceServer).HomestayBussinessDetail(ctx, req.(*HomestayBussinessDetailReq))
+		return srv.(HomestayServiceServer).HomestayBusinessDetail(ctx, req.(*HomestayBusinessDetailReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -380,12 +380,12 @@ var HomestayService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HomestayService_GoodBoss_Handler,
 		},
 		{
-			MethodName: "HomestayBussinessList",
-			Handler:    _HomestayService_HomestayBussinessList_Handler,
+			MethodName: "HomestayBusinessList",
+			Handler:    _HomestayService_HomestayBusinessList_Handler,
 		},
 		{
-			MethodName: "HomestayBussinessDetail",
-			Handler:    _HomestayService_HomestayBussinessDetail_Handler,
+			MethodName: "HomestayBusinessDetail",
+			Handler:    _HomestayService_HomestayBusinessDetail_Handler,
 		},
 		{
 			MethodName: "CommentList",

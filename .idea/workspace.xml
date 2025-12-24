@@ -5,10 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/businessListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/logic/homestay/businessListLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/model/homestayModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/businessListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/businessListLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/desc/travel.api" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/desc/travel.api" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/handler/homestayBussiness/goodBossHandler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/handler/homestayBussiness/homestayBussinessDetailHandler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/handler/homestayBussiness/homestayBussinessListHandler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/handler/homestayComment/commentListHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/handler/homestayComment/commentListHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/handler/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/handler/routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestayBussiness/goodBossLogic.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestayBussiness/homestayBussinessDetailLogic.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestayBussiness/homestayBussinessListLogic.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/types/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/types/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/model/homestayBusinessModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayBusinessModel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/homestayservice/homestayService.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/homestayservice/homestayService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/homestayBussinessDetailLogic.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/homestayBussinessListLogic.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/server/homestayServiceServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/server/homestayServiceServer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/pb/1.proto" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/pb/travel.pb.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/pb/travel.proto" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/pb/travel.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/pb/travel_grpc.pb.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,11 +98,11 @@
       <recent name="D:\go-zero-looklook\api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\go-zero-looklook\app\travel\api\internal" />
-      <recent name="D:\go-zero-looklook\app\travel\rpc\pb" />
       <recent name="D:\go-zero-looklook\app\travel\api\desc" />
-      <recent name="D:\go-zero-looklook\app\travel\appi" />
-      <recent name="D:\go-zero-looklook\app\usercenter\model" />
+      <recent name="D:\go-zero-looklook\app\travel\rpc\homestay" />
+      <recent name="D:\go-zero-looklook\app\travel\rpc" />
+      <recent name="D:\go-zero-looklook\app\travel\api" />
+      <recent name="D:\go-zero-looklook\app\travel\api\internal" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -135,8 +152,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build go-zero-looklook/app/travel/api" />
-        <item itemvalue="Go Build.go build go-zero-looklook/app/travel/rpc" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/rpc" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/travel/rpc" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/api" />
       </list>
     </recent_temporary>

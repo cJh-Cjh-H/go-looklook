@@ -73,26 +73,26 @@ type HomestayBusinessBoss struct {
 	Rank     int64  `json:"rank"` //排名
 }
 
+type HomestayBusinessDetailReq struct {
+	Id int64 `json:"id"`
+}
+
+type HomestayBusinessDetailResp struct {
+	Boss HomestayBusinessBoss `json:"boss"`
+}
+
 type HomestayBusinessListInfo struct {
 	HomestayBusiness
 	SellMonth     int64 `json:"sellMonth"`     //月销售
 	PersonConsume int64 `json:"personConsume"` //个人消费
 }
 
-type HomestayBussinessDetailReq struct {
-	Id int64 `json:"id"`
-}
-
-type HomestayBussinessDetailResp struct {
-	Boss HomestayBusinessBoss `json:"boss"`
-}
-
-type HomestayBussinessListReq struct {
+type HomestayBusinessListReq struct {
 	LastId   int64 `json:"lastId"`
 	PageSize int64 `json:"pageSize"`
 }
 
-type HomestayBussinessListResp struct {
+type HomestayBusinessListResp struct {
 	List []HomestayBusinessListInfo `json:"list"`
 }
 

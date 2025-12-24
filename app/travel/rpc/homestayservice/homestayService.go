@@ -14,28 +14,28 @@ import (
 )
 
 type (
-	BaseResp                    = pb.BaseResp
-	BusinessListReq             = pb.BusinessListReq
-	BusinessListResp            = pb.BusinessListResp
-	CommentListReq              = pb.CommentListReq
-	CommentListResp             = pb.CommentListResp
-	GoodBossReq                 = pb.GoodBossReq
-	GoodBossResp                = pb.GoodBossResp
-	GuessListReq                = pb.GuessListReq
-	GuessListResp               = pb.GuessListResp
-	Homestay                    = pb.Homestay
-	HomestayBusiness            = pb.HomestayBusiness
-	HomestayBusinessBoss        = pb.HomestayBusinessBoss
-	HomestayBusinessListInfo    = pb.HomestayBusinessListInfo
-	HomestayBussinessDetailReq  = pb.HomestayBussinessDetailReq
-	HomestayBussinessDetailResp = pb.HomestayBussinessDetailResp
-	HomestayBussinessListReq    = pb.HomestayBussinessListReq
-	HomestayBussinessListResp   = pb.HomestayBussinessListResp
-	HomestayComment             = pb.HomestayComment
-	HomestayDetailReq           = pb.HomestayDetailReq
-	HomestayDetailResp          = pb.HomestayDetailResp
-	HomestayListReq             = pb.HomestayListReq
-	HomestayListResp            = pb.HomestayListResp
+	BaseResp                   = pb.BaseResp
+	BusinessListReq            = pb.BusinessListReq
+	BusinessListResp           = pb.BusinessListResp
+	CommentListReq             = pb.CommentListReq
+	CommentListResp            = pb.CommentListResp
+	GoodBossReq                = pb.GoodBossReq
+	GoodBossResp               = pb.GoodBossResp
+	GuessListReq               = pb.GuessListReq
+	GuessListResp              = pb.GuessListResp
+	Homestay                   = pb.Homestay
+	HomestayBusiness           = pb.HomestayBusiness
+	HomestayBusinessBoss       = pb.HomestayBusinessBoss
+	HomestayBusinessDetailReq  = pb.HomestayBusinessDetailReq
+	HomestayBusinessDetailResp = pb.HomestayBusinessDetailResp
+	HomestayBusinessListInfo   = pb.HomestayBusinessListInfo
+	HomestayBusinessListReq    = pb.HomestayBusinessListReq
+	HomestayBusinessListResp   = pb.HomestayBusinessListResp
+	HomestayComment            = pb.HomestayComment
+	HomestayDetailReq          = pb.HomestayDetailReq
+	HomestayDetailResp         = pb.HomestayDetailResp
+	HomestayListReq            = pb.HomestayListReq
+	HomestayListResp           = pb.HomestayListResp
 
 	HomestayService interface {
 		// 民宿服务
@@ -45,8 +45,8 @@ type (
 		HomestayDetail(ctx context.Context, in *HomestayDetailReq, opts ...grpc.CallOption) (*HomestayDetailResp, error)
 		// 民宿商家服务
 		GoodBoss(ctx context.Context, in *GoodBossReq, opts ...grpc.CallOption) (*GoodBossResp, error)
-		HomestayBussinessList(ctx context.Context, in *HomestayBussinessListReq, opts ...grpc.CallOption) (*HomestayBussinessListResp, error)
-		HomestayBussinessDetail(ctx context.Context, in *HomestayBussinessDetailReq, opts ...grpc.CallOption) (*HomestayBussinessDetailResp, error)
+		HomestayBusinessList(ctx context.Context, in *HomestayBusinessListReq, opts ...grpc.CallOption) (*HomestayBusinessListResp, error)
+		HomestayBusinessDetail(ctx context.Context, in *HomestayBusinessDetailReq, opts ...grpc.CallOption) (*HomestayBusinessDetailResp, error)
 		// 民宿评论服务
 		CommentList(ctx context.Context, in *CommentListReq, opts ...grpc.CallOption) (*CommentListResp, error)
 	}
@@ -89,14 +89,14 @@ func (m *defaultHomestayService) GoodBoss(ctx context.Context, in *GoodBossReq, 
 	return client.GoodBoss(ctx, in, opts...)
 }
 
-func (m *defaultHomestayService) HomestayBussinessList(ctx context.Context, in *HomestayBussinessListReq, opts ...grpc.CallOption) (*HomestayBussinessListResp, error) {
+func (m *defaultHomestayService) HomestayBusinessList(ctx context.Context, in *HomestayBusinessListReq, opts ...grpc.CallOption) (*HomestayBusinessListResp, error) {
 	client := pb.NewHomestayServiceClient(m.cli.Conn())
-	return client.HomestayBussinessList(ctx, in, opts...)
+	return client.HomestayBusinessList(ctx, in, opts...)
 }
 
-func (m *defaultHomestayService) HomestayBussinessDetail(ctx context.Context, in *HomestayBussinessDetailReq, opts ...grpc.CallOption) (*HomestayBussinessDetailResp, error) {
+func (m *defaultHomestayService) HomestayBusinessDetail(ctx context.Context, in *HomestayBusinessDetailReq, opts ...grpc.CallOption) (*HomestayBusinessDetailResp, error) {
 	client := pb.NewHomestayServiceClient(m.cli.Conn())
-	return client.HomestayBussinessDetail(ctx, in, opts...)
+	return client.HomestayBusinessDetail(ctx, in, opts...)
 }
 
 // 民宿评论服务

@@ -64,20 +64,20 @@ type (
 		SellMonth     int64 `json:"sellMonth"` //月销售
 		PersonConsume int64 `json:"personConsume"` //个人消费
 	}
-	HomestayBussinessListReq {
+	HomestayBusinessListReq {
 		LastId   int64 `json:"lastId"`
 		PageSize int64 `json:"pageSize"`
 	}
-	HomestayBussinessListResp {
+	HomestayBusinessListResp {
 		List []HomestayBusinessListInfo `json:"list"`
 	}
 )
 
 type (
-	HomestayBussinessDetailReq {
+	HomestayBusinessDetailReq {
 		Id int64 `json:"id"`
 	}
-	HomestayBussinessDetailResp {
+	HomestayBusinessDetailResp {
 		Boss HomestayBusinessBoss `json:"boss"`
 	}
 )
@@ -164,20 +164,20 @@ service travel {
 //no need login
 @server (
 	prefix: travel/v1
-	group:  homestayBussiness
+	group:  homestayBusiness
 )
 service travel {
 	@doc "good boss"
 	@handler goodBoss
-	post /homestayBussiness/goodBoss (GoodBossReq) returns (GoodBossResp)
+	post /homestayBusiness/goodBoss (GoodBossReq) returns (GoodBossResp)
 
 	@doc "business list"
-	@handler homestayBussinessList
-	post /homestayBussiness/homestayBussinessList (HomestayBussinessListReq) returns (HomestayBussinessListResp)
+	@handler homestayBusinessList
+	post /homestayBusiness/homestayBusinessList (HomestayBusinessListReq) returns (HomestayBusinessListResp)
 
 	@doc "boss detail"
-	@handler homestayBussinessDetail
-	post /homestayBussiness/homestayBussinessDetail (HomestayBussinessDetailReq) returns (HomestayBussinessDetailResp)
+	@handler homestayBusinessDetail
+	post /homestayBusiness/homestayBusinessDetail (HomestayBusinessDetailReq) returns (HomestayBusinessDetailResp)
 }
 
 //========================> homestay-homestayComment v1 <===================================

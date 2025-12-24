@@ -1,4 +1,4 @@
-package homestayBussiness
+package homestayBusiness
 
 import (
 	"context"

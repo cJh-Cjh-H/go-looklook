@@ -21,18 +21,18 @@ type (
 	HomestayBusinessModel interface {
 		homestayBusinessModel
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
-		TransInsert(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error)
-		TransUpdate(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error)
-		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *Homestay) error
+		TransInsert(ctx context.Context, session sqlx.Session, data *HomestayBusiness) (sql.Result, error)
+		TransUpdate(ctx context.Context, session sqlx.Session, data *HomestayBusiness) (sql.Result, error)
+		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *HomestayBusiness) error
 		SelectBuilder() squirrel.SelectBuilder
-		DeleteSoft(ctx context.Context, session sqlx.Session, data *Homestay) error
+		DeleteSoft(ctx context.Context, session sqlx.Session, data *HomestayBusiness) error
 		FindSum(ctx context.Context, sumBuilder squirrel.SelectBuilder, field string) (float64, error)
 		FindCount(ctx context.Context, countBuilder squirrel.SelectBuilder, field string) (int64, error)
-		FindAll(ctx context.Context, rowBuilder squirrel.SelectBuilder, orderBy string) ([]*Homestay, error)
-		FindPageListByPage(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, error)
-		FindPageListByPageWithTotal(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, int64, error)
-		FindPageListByIdDESC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Homestay, error)
-		FindPageListByIdASC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*Homestay, error)
+		FindAll(ctx context.Context, rowBuilder squirrel.SelectBuilder, orderBy string) ([]*HomestayBusiness, error)
+		FindPageListByPage(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayBusiness, error)
+		FindPageListByPageWithTotal(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayBusiness, int64, error)
+		FindPageListByIdDESC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*HomestayBusiness, error)
+		FindPageListByIdASC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*HomestayBusiness, error)
 		TransDelete(ctx context.Context, session sqlx.Session, id int64) error
 	}
 
@@ -47,40 +47,54 @@ func (m *defaultHomestayBusinessModel) Trans(ctx context.Context, fn func(ctx co
 	})
 }
 
-func (m *defaultHomestayBusinessModel) TransInsert(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error) {
+func (m *defaultHomestayBusinessModel) TransInsert(ctx context.Context, session sqlx.Session, data *HomestayBusiness) (sql.Result, error) {
 	data.DeleteTime = time.Unix(0, 0)
 	data.DelState = globalkey.DelStateNo
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, data.Id)
+	looklookTravelHomestayBusinessIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayBusinessIdPrefix, data.Id)
+	looklookTravelHomestayBusinessUserIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayBusinessIdPrefix, data.UserId)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayRowsExpectAutoSet)
-		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice)
-	}, looklookTravelHomestayIdKey)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayBusinessRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Title, data.UserId, data.Info, data.BossInfo, data.LicenseFron, data.LicenseBack, data.RowState, data.Star, data.Tags, data.Cover, data.HeaderImg, data.Version)
+	}, looklookTravelHomestayBusinessIdKey, looklookTravelHomestayBusinessUserIdKey)
 }
 
-func (m *defaultHomestayBusinessModel) TransUpdate(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error) {
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, data.Id)
+func (m *defaultHomestayBusinessModel) TransUpdate(ctx context.Context, session sqlx.Session, newData *HomestayBusiness) (sql.Result, error) {
+	data, err := m.FindOne(ctx, newData.Id)
+	if err != nil {
+		return nil, err
+	}
+	looklookTravelHomestayBusinessIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayBusinessIdPrefix, data.Id)
+	looklookTravelHomestayBusinessUserIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayBusinessUserIdPrefix, data.UserId)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayRowsWithPlaceHolder)
-		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id)
-	}, looklookTravelHomestayIdKey)
+		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayBusinessRowsWithPlaceHolder)
+		if session != nil {
+			return session.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Title, newData.UserId, newData.Info, newData.BossInfo, newData.LicenseFron, newData.LicenseBack, newData.RowState, newData.Star, newData.Tags, newData.Cover, newData.HeaderImg, newData.Version, newData.Id)
+		}
+		return conn.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Title, newData.UserId, newData.Info, newData.BossInfo, newData.LicenseFron, newData.LicenseBack, newData.RowState, newData.Star, newData.Tags, newData.Cover, newData.HeaderImg, newData.Version, newData.Id)
+	}, looklookTravelHomestayBusinessIdKey, looklookTravelHomestayBusinessUserIdKey)
 }
 
-func (m *defaultHomestayBusinessModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *Homestay) error {
+func (m *defaultHomestayBusinessModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, newData *HomestayBusiness) error {
 
-	oldVersion := data.Version
-	data.Version += 1
+	oldVersion := newData.Version
+	newData.Version += 1
 
 	var sqlResult sql.Result
 	var err error
 
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, data.Id)
+	data, err := m.FindOne(ctx, newData.Id)
+	if err != nil {
+		return err
+	}
+	looklookTravelHomestayBusinessIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayBusinessIdPrefix, data.Id)
+	looklookTravelHomestayBusinessUserIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayBusinessUserIdPrefix, data.UserId)
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayRowsWithPlaceHolder)
+		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayBusinessRowsWithPlaceHolder)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion)
+			return session.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Title, newData.UserId, newData.Info, newData.BossInfo, newData.LicenseFron, newData.LicenseBack, newData.RowState, newData.Star, newData.Tags, newData.Cover, newData.HeaderImg, newData.Version, newData.Id, oldVersion)
 		}
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion)
-	}, looklookTravelHomestayIdKey)
+		return conn.ExecCtx(ctx, query, newData.DeleteTime, newData.DelState, newData.Title, newData.UserId, newData.Info, newData.BossInfo, newData.LicenseFron, newData.LicenseBack, newData.RowState, newData.Star, newData.Tags, newData.Cover, newData.HeaderImg, newData.Version, newData.Id, oldVersion)
+	}, looklookTravelHomestayBusinessIdKey, looklookTravelHomestayBusinessUserIdKey)
 	if err != nil {
 		return err
 	}
@@ -96,11 +110,11 @@ func (m *defaultHomestayBusinessModel) UpdateWithVersion(ctx context.Context, se
 }
 
 // DeleteSoft 软删除
-func (m *defaultHomestayBusinessModel) DeleteSoft(ctx context.Context, session sqlx.Session, data *Homestay) error {
+func (m *defaultHomestayBusinessModel) DeleteSoft(ctx context.Context, session sqlx.Session, data *HomestayBusiness) error {
 	data.DelState = globalkey.DelStateYes
 	data.DeleteTime = time.Now()
 	if err := m.UpdateWithVersion(ctx, session, data); err != nil {
-		return errors.Wrapf(errors.New("delete soft failed "), "HomestayModel delete err : %+v", err)
+		return errors.Wrapf(errors.New("delete soft failed "), "HomestayBusinessModel delete err : %+v", err)
 	}
 	return nil
 }
@@ -154,7 +168,7 @@ func (m *defaultHomestayBusinessModel) FindCount(ctx context.Context, builder sq
 }
 
 // FindAll 通用的查询所有记录方法
-func (m *defaultHomestayBusinessModel) FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*Homestay, error) {
+func (m *defaultHomestayBusinessModel) FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*HomestayBusiness, error) {
 
 	builder = builder.Columns(homestayRows)
 
@@ -169,7 +183,7 @@ func (m *defaultHomestayBusinessModel) FindAll(ctx context.Context, builder squi
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayBusiness
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -180,7 +194,7 @@ func (m *defaultHomestayBusinessModel) FindAll(ctx context.Context, builder squi
 }
 
 // FindPageListByPage 分页查询的通用方法
-func (m *defaultHomestayBusinessModel) FindPageListByPage(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, error) {
+func (m *defaultHomestayBusinessModel) FindPageListByPage(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayBusiness, error) {
 
 	builder = builder.Columns(homestayRows)
 
@@ -200,7 +214,7 @@ func (m *defaultHomestayBusinessModel) FindPageListByPage(ctx context.Context, b
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayBusiness
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -211,7 +225,7 @@ func (m *defaultHomestayBusinessModel) FindPageListByPage(ctx context.Context, b
 }
 
 // FindPageListByPageWithTotal 分页查询的通用方法（带总数）
-func (m *defaultHomestayBusinessModel) FindPageListByPageWithTotal(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, int64, error) {
+func (m *defaultHomestayBusinessModel) FindPageListByPageWithTotal(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayBusiness, int64, error) {
 
 	total, err := m.FindCount(ctx, builder, "id")
 	if err != nil {
@@ -236,7 +250,7 @@ func (m *defaultHomestayBusinessModel) FindPageListByPageWithTotal(ctx context.C
 		return nil, total, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayBusiness
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -247,9 +261,9 @@ func (m *defaultHomestayBusinessModel) FindPageListByPageWithTotal(ctx context.C
 }
 
 // FindPageListByIdDESC 通过Id分页查询并降序排列
-func (m *defaultHomestayBusinessModel) FindPageListByIdDESC(ctx context.Context, builder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Homestay, error) {
+func (m *defaultHomestayBusinessModel) FindPageListByIdDESC(ctx context.Context, builder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*HomestayBusiness, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayBusinessRows)
 
 	if preMinId > 0 {
 		builder = builder.Where(" id < ? ", preMinId)
@@ -260,7 +274,7 @@ func (m *defaultHomestayBusinessModel) FindPageListByIdDESC(ctx context.Context,
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayBusiness
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -271,7 +285,7 @@ func (m *defaultHomestayBusinessModel) FindPageListByIdDESC(ctx context.Context,
 }
 
 // FindPageListByIdASC 通过Id分页查询并降序排列
-func (m *defaultHomestayBusinessModel) FindPageListByIdASC(ctx context.Context, builder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*Homestay, error) {
+func (m *defaultHomestayBusinessModel) FindPageListByIdASC(ctx context.Context, builder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*HomestayBusiness, error) {
 
 	builder = builder.Columns(homestayRows)
 
@@ -284,7 +298,7 @@ func (m *defaultHomestayBusinessModel) FindPageListByIdASC(ctx context.Context, 
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayBusiness
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -299,14 +313,20 @@ func (m *defaultHomestayBusinessModel) SelectBuilder() squirrel.SelectBuilder {
 	return squirrel.Select().From(m.table)
 }
 func (m *defaultHomestayBusinessModel) TransDelete(ctx context.Context, session sqlx.Session, id int64) error {
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, id)
-	_, err := m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
+	data, err := m.FindOne(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	looklookTravelHomestayBusinessIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayBusinessIdPrefix, id)
+	looklookTravelHomestayBusinessUserIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayBusinessUserIdPrefix, data.UserId)
+	_, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `id` = ?", m.table)
 		if session != nil {
 			return session.ExecCtx(ctx, query, id)
 		}
 		return conn.ExecCtx(ctx, query, id)
-	}, looklookTravelHomestayIdKey)
+	}, looklookTravelHomestayBusinessIdKey, looklookTravelHomestayBusinessUserIdKey)
 	return err
 }
 

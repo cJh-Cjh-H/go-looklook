@@ -1,10 +1,10 @@
-package homestayBussiness
+package homestayBusiness
 
 import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"go-zero-looklook/app/travel/api/internal/logic/homestayBussiness"
+	"go-zero-looklook/app/travel/api/internal/logic/homestayBusiness"
 	"go-zero-looklook/app/travel/api/internal/svc"
 	"go-zero-looklook/app/travel/api/internal/types"
 )
@@ -18,7 +18,7 @@ func GoodBossHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
-		l := homestayBussiness.NewGoodBossLogic(r.Context(), svcCtx)
+		l := homestayBusiness.NewGoodBossLogic(r.Context(), svcCtx)
 		resp, err := l.GoodBoss(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)

@@ -68,21 +68,21 @@ message HomestayBusinessListInfo {
   int64 personConsume = 3;    // 个人消费
 }
 
-message HomestayBussinessListReq {
+message HomestayBusinessListReq {
   int64 lastId = 1;
   int64 pageSize = 2;
 }
 
-message HomestayBussinessListResp {
+message HomestayBusinessListResp {
   BaseResp baseResp = 1;
   repeated HomestayBusinessListInfo list = 2;
 }
 
-message HomestayBussinessDetailReq {
+message HomestayBusinessDetailReq {
   int64 id = 1;
 }
 
-message HomestayBussinessDetailResp {
+message HomestayBusinessDetailResp {
   BaseResp baseResp = 1;
   HomestayBusinessBoss boss = 2;
 }
@@ -154,8 +154,8 @@ service HomestayService {
 
   // 民宿商家服务
   rpc GoodBoss(GoodBossReq) returns (GoodBossResp);
-  rpc HomestayBussinessList(HomestayBussinessListReq) returns (HomestayBussinessListResp);
-  rpc HomestayBussinessDetail(HomestayBussinessDetailReq) returns (HomestayBussinessDetailResp);
+  rpc HomestayBusinessList(HomestayBusinessListReq) returns (HomestayBusinessListResp);
+  rpc HomestayBusinessDetail(HomestayBusinessDetailReq) returns (HomestayBusinessDetailResp);
 
   // 民宿评论服务
   rpc CommentList(CommentListReq) returns (CommentListResp);

@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	homestay "go-zero-looklook/app/travel/api/internal/handler/homestay"
-	homestayBussiness "go-zero-looklook/app/travel/api/internal/handler/homestayBussiness"
+	homestayBusiness "go-zero-looklook/app/travel/api/internal/handler/homestayBusiness"
 	homestayComment "go-zero-looklook/app/travel/api/internal/handler/homestayComment"
 	"go-zero-looklook/app/travel/api/internal/svc"
 
@@ -50,20 +50,20 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				// good boss
 				Method:  http.MethodPost,
-				Path:    "/homestayBussiness/goodBoss",
-				Handler: homestayBussiness.GoodBossHandler(serverCtx),
+				Path:    "/homestayBusiness/goodBoss",
+				Handler: homestayBusiness.GoodBossHandler(serverCtx),
 			},
 			{
 				// boss detail
 				Method:  http.MethodPost,
-				Path:    "/homestayBussiness/homestayBussinessDetail",
-				Handler: homestayBussiness.HomestayBussinessDetailHandler(serverCtx),
+				Path:    "/homestayBusiness/homestayBusinessDetail",
+				Handler: homestayBusiness.HomestayBusinessDetailHandler(serverCtx),
 			},
 			{
 				// business list
 				Method:  http.MethodPost,
-				Path:    "/homestayBussiness/homestayBussinessList",
-				Handler: homestayBussiness.HomestayBussinessListHandler(serverCtx),
+				Path:    "/homestayBusiness/homestayBusinessList",
+				Handler: homestayBusiness.HomestayBusinessListHandler(serverCtx),
 			},
 		},
 		rest.WithPrefix("/travel/v1"),

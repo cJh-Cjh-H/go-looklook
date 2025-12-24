@@ -9,7 +9,7 @@ import (
 	"go-zero-looklook/app/travel/api/internal/types"
 )
 
-// homestay comment list
+// CommentListHandler homestay comment list
 func CommentListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.CommentListReq

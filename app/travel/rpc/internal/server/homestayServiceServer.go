@@ -50,14 +50,14 @@ func (s *HomestayServiceServer) GoodBoss(ctx context.Context, in *pb.GoodBossReq
 	return l.GoodBoss(in)
 }
 
-func (s *HomestayServiceServer) HomestayBussinessList(ctx context.Context, in *pb.HomestayBussinessListReq) (*pb.HomestayBussinessListResp, error) {
-	l := logic.NewHomestayBussinessListLogic(ctx, s.svcCtx)
-	return l.HomestayBussinessList(in)
+func (s *HomestayServiceServer) HomestayBusinessList(ctx context.Context, in *pb.HomestayBusinessListReq) (*pb.HomestayBusinessListResp, error) {
+	l := logic.NewHomestayBusinessListLogic(ctx, s.svcCtx)
+	return l.HomestayBusinessList(in)
 }
 
-func (s *HomestayServiceServer) HomestayBussinessDetail(ctx context.Context, in *pb.HomestayBussinessDetailReq) (*pb.HomestayBussinessDetailResp, error) {
-	l := logic.NewHomestayBussinessDetailLogic(ctx, s.svcCtx)
-	return l.HomestayBussinessDetail(in)
+func (s *HomestayServiceServer) HomestayBusinessDetail(ctx context.Context, in *pb.HomestayBusinessDetailReq) (*pb.HomestayBusinessDetailResp, error) {
+	l := logic.NewHomestayBusinessDetailLogic(ctx, s.svcCtx)
+	return l.HomestayBusinessDetail(in)
 }
 
 // 民宿评论服务
