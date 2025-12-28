@@ -2,6 +2,8 @@ package homestayComment
 
 import (
 	"context"
+	"github.com/pkg/errors"
+	"go-zero-looklook/app/travel/rpc/pb"
 
 	"go-zero-looklook/app/travel/api/internal/svc"
 	"go-zero-looklook/app/travel/api/internal/types"
@@ -25,7 +27,27 @@ func NewCommentListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Comme
 }
 
 func (l *CommentListLogic) CommentList(req *types.CommentListReq) (resp *types.CommentListResp, err error) {
-	// todo: add your logic here and delete this line
-
+	rpcResp, err := l.svcCtx.HomestayRpc.CommentList(l.ctx, &pb.CommentListReq{
+		LastId:   req.LastId,
+		PageSize: req.PageSize,
+	})
+	if err != nil {
+		return nil, errors.Wrapf(err, "API.CommentListLogic.CommentList")
+	}
+	list := make([]types.HomestayComment, len(rpcResp.List))
+	for i, comment := range rpcResp.List {
+		list[i] = types.HomestayComment{
+			Id:         comment.Id,
+			UserId:     comment.UserId,
+			Star:       comment.Star,
+			Content:    comment.Content,
+			HomestayId: comment.HomestayId,
+			Avatar:     comment.Avatar,
+			Nickname:   comment.Nickname,
+		}
+	}
+	resp = &types.CommentListResp{
+		List: list,
+	}
 	return
 }

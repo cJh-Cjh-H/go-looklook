@@ -8,6 +8,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"go-zero-looklook/app/travel/rpc/pb"
 	"go-zero-looklook/app/usercenter/model"
 	"go-zero-looklook/pkg/globalkey"
 	"time"
@@ -21,19 +22,20 @@ type (
 	HomestayCommentModel interface {
 		homestayCommentModel
 		Trans(ctx context.Context, fn func(context context.Context, session sqlx.Session) error) error
-		TransInsert(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error)
-		TransUpdate(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error)
-		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *Homestay) error
+		TransInsert(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error)
+		TransUpdate(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error)
+		UpdateWithVersion(ctx context.Context, session sqlx.Session, data *HomestayComment) error
 		SelectBuilder() squirrel.SelectBuilder
-		DeleteSoft(ctx context.Context, session sqlx.Session, data *Homestay) error
+		DeleteSoft(ctx context.Context, session sqlx.Session, data *HomestayComment) error
 		FindSum(ctx context.Context, sumBuilder squirrel.SelectBuilder, field string) (float64, error)
 		FindCount(ctx context.Context, countBuilder squirrel.SelectBuilder, field string) (int64, error)
-		FindAll(ctx context.Context, rowBuilder squirrel.SelectBuilder, orderBy string) ([]*Homestay, error)
-		FindPageListByPage(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, error)
-		FindPageListByPageWithTotal(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, int64, error)
-		FindPageListByIdDESC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Homestay, error)
-		FindPageListByIdASC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*Homestay, error)
+		FindAll(ctx context.Context, rowBuilder squirrel.SelectBuilder, orderBy string) ([]*HomestayComment, error)
+		FindPageListByPage(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayComment, error)
+		FindPageListByPageWithTotal(ctx context.Context, rowBuilder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayComment, int64, error)
+		FindPageListByIdDESC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*HomestayComment, error)
+		FindPageListByIdASC(ctx context.Context, rowBuilder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*HomestayComment, error)
 		TransDelete(ctx context.Context, session sqlx.Session, id int64) error
+		FindDIY(ctx context.Context, lastId int64, pageSize int64) ([]*pb.HomestayComment, error)
 	}
 
 	customHomestayCommentModel struct {
@@ -41,31 +43,58 @@ type (
 	}
 )
 
+func (m *defaultHomestayCommentModel) FindDIY(ctx context.Context, lastId int64, pageSize int64) ([]*pb.HomestayComment, error) {
+	s := `SELECT c.id,
+        c.homestay_id,
+        c.content,  -- 放到第3位，对应pb.HomestayComment.Content
+        AVG(
+            (CAST(c.star->>'$.view' AS DECIMAL(3,2)) +
+             CAST(c.star->>'$.clean' AS DECIMAL(3,2)) +
+             CAST(c.star->>'$.service' AS DECIMAL(3,2)) +
+             CAST(c.star->>'$.location' AS DECIMAL(3,2))
+            ) / 4.0
+        ) as star,
+        c.user_id,
+        u.nickname,
+        u.avatar
+FROM homestay_comment c
+    INNER JOIN user u ON c.user_id = u.id
+where c.del_state=0 and u.del_state=0 and c.id>?
+GROUP BY c.id, c.homestay_id, c.user_id, c.content, u.nickname, u.avatar
+limit ?;
+`
+	var resp []*pb.HomestayComment
+	err := m.QueryRowsNoCache(&resp, s, lastId, pageSize)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Model.FindPageDIY.QueryRowNoCache")
+	}
+	return resp, err
+}
 func (m *defaultHomestayCommentModel) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
 	return m.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
 		return fn(ctx, session)
 	})
 }
 
-func (m *defaultHomestayCommentModel) TransInsert(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error) {
+func (m *defaultHomestayCommentModel) TransInsert(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error) {
 	data.DeleteTime = time.Unix(0, 0)
 	data.DelState = globalkey.DelStateNo
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, data.Id)
+	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayCommentIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, homestayRowsExpectAutoSet)
-		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice)
-	}, looklookTravelHomestayIdKey)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?)", m.table, homestayCommentRowsExpectAutoSet)
+		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version)
+	}, looklookTravelHomestayCommentIdKey)
 }
 
-func (m *defaultHomestayCommentModel) TransUpdate(ctx context.Context, session sqlx.Session, data *Homestay) (sql.Result, error) {
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, data.Id)
+func (m *defaultHomestayCommentModel) TransUpdate(ctx context.Context, session sqlx.Session, data *HomestayComment) (sql.Result, error) {
+	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayCommentIdPrefix, data.Id)
 	return m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayRowsWithPlaceHolder)
-		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id)
-	}, looklookTravelHomestayIdKey)
+		query := fmt.Sprintf("update %s set %s where `id` = ?", m.table, homestayCommentRowsWithPlaceHolder)
+		return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id)
+	}, looklookTravelHomestayCommentIdKey)
 }
 
-func (m *defaultHomestayCommentModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *Homestay) error {
+func (m *defaultHomestayCommentModel) UpdateWithVersion(ctx context.Context, session sqlx.Session, data *HomestayComment) error {
 
 	oldVersion := data.Version
 	data.Version += 1
@@ -73,14 +102,14 @@ func (m *defaultHomestayCommentModel) UpdateWithVersion(ctx context.Context, ses
 	var sqlResult sql.Result
 	var err error
 
-	looklookTravelHomestayIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayIdPrefix, data.Id)
+	looklookTravelHomestayCommentIdKey := fmt.Sprintf("%s%v", cacheLookLookHomestayCommentIdPrefix, data.Id)
 	sqlResult, err = m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayRowsWithPlaceHolder)
+		query := fmt.Sprintf("update %s set %s where `id` = ? and version = ? ", m.table, homestayCommentRowsWithPlaceHolder)
 		if session != nil {
-			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion)
+			return session.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id, oldVersion)
 		}
-		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.Version, data.Title, data.SubTitle, data.Banner, data.Info, data.PeopleNum, data.HomestayBusinessId, data.UserId, data.RowState, data.RowType, data.FoodInfo, data.FoodPrice, data.HomestayPrice, data.MarketHomestayPrice, data.Id, oldVersion)
-	}, looklookTravelHomestayIdKey)
+		return conn.ExecCtx(ctx, query, data.DeleteTime, data.DelState, data.HomestayId, data.UserId, data.Content, data.Star, data.Version, data.Id, oldVersion)
+	}, looklookTravelHomestayCommentIdKey)
 	if err != nil {
 		return err
 	}
@@ -96,7 +125,7 @@ func (m *defaultHomestayCommentModel) UpdateWithVersion(ctx context.Context, ses
 }
 
 // DeleteSoft 软删除
-func (m *defaultHomestayCommentModel) DeleteSoft(ctx context.Context, session sqlx.Session, data *Homestay) error {
+func (m *defaultHomestayCommentModel) DeleteSoft(ctx context.Context, session sqlx.Session, data *HomestayComment) error {
 	data.DelState = globalkey.DelStateYes
 	data.DeleteTime = time.Now()
 	if err := m.UpdateWithVersion(ctx, session, data); err != nil {
@@ -154,9 +183,9 @@ func (m *defaultHomestayCommentModel) FindCount(ctx context.Context, builder squ
 }
 
 // FindAll 通用的查询所有记录方法
-func (m *defaultHomestayCommentModel) FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*Homestay, error) {
+func (m *defaultHomestayCommentModel) FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*HomestayComment, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayCommentRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -169,7 +198,7 @@ func (m *defaultHomestayCommentModel) FindAll(ctx context.Context, builder squir
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayComment
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -180,9 +209,9 @@ func (m *defaultHomestayCommentModel) FindAll(ctx context.Context, builder squir
 }
 
 // FindPageListByPage 分页查询的通用方法
-func (m *defaultHomestayCommentModel) FindPageListByPage(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, error) {
+func (m *defaultHomestayCommentModel) FindPageListByPage(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayComment, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayCommentRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -200,7 +229,7 @@ func (m *defaultHomestayCommentModel) FindPageListByPage(ctx context.Context, bu
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayComment
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -211,14 +240,14 @@ func (m *defaultHomestayCommentModel) FindPageListByPage(ctx context.Context, bu
 }
 
 // FindPageListByPageWithTotal 分页查询的通用方法（带总数）
-func (m *defaultHomestayCommentModel) FindPageListByPageWithTotal(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*Homestay, int64, error) {
+func (m *defaultHomestayCommentModel) FindPageListByPageWithTotal(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize int64, orderBy string) ([]*HomestayComment, int64, error) {
 
 	total, err := m.FindCount(ctx, builder, "id")
 	if err != nil {
 		return nil, 0, err
 	}
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayCommentRows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -236,7 +265,7 @@ func (m *defaultHomestayCommentModel) FindPageListByPageWithTotal(ctx context.Co
 		return nil, total, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayComment
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -247,9 +276,9 @@ func (m *defaultHomestayCommentModel) FindPageListByPageWithTotal(ctx context.Co
 }
 
 // FindPageListByIdDESC 通过Id分页查询并降序排列
-func (m *defaultHomestayCommentModel) FindPageListByIdDESC(ctx context.Context, builder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*Homestay, error) {
+func (m *defaultHomestayCommentModel) FindPageListByIdDESC(ctx context.Context, builder squirrel.SelectBuilder, preMinId, pageSize int64) ([]*HomestayComment, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayCommentRows)
 
 	if preMinId > 0 {
 		builder = builder.Where(" id < ? ", preMinId)
@@ -260,7 +289,7 @@ func (m *defaultHomestayCommentModel) FindPageListByIdDESC(ctx context.Context, 
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayComment
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:
@@ -271,9 +300,9 @@ func (m *defaultHomestayCommentModel) FindPageListByIdDESC(ctx context.Context, 
 }
 
 // FindPageListByIdASC 通过Id分页查询并降序排列
-func (m *defaultHomestayCommentModel) FindPageListByIdASC(ctx context.Context, builder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*Homestay, error) {
+func (m *defaultHomestayCommentModel) FindPageListByIdASC(ctx context.Context, builder squirrel.SelectBuilder, preMaxId, pageSize int64) ([]*HomestayComment, error) {
 
-	builder = builder.Columns(homestayRows)
+	builder = builder.Columns(homestayCommentRows)
 
 	if preMaxId > 0 {
 		builder = builder.Where(" id > ? ", preMaxId)
@@ -284,7 +313,7 @@ func (m *defaultHomestayCommentModel) FindPageListByIdASC(ctx context.Context, b
 		return nil, err
 	}
 
-	var resp []*Homestay
+	var resp []*HomestayComment
 	err = m.QueryRowsNoCacheCtx(ctx, &resp, query, values...)
 	switch err {
 	case nil:

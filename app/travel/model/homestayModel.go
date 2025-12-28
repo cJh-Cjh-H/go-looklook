@@ -8,6 +8,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/stores/cache"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+
 	"go-zero-looklook/app/usercenter/model"
 	"go-zero-looklook/pkg/globalkey"
 	"strings"

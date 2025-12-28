@@ -14,6 +14,7 @@ type ServiceContext struct {
 	HomestayModel         model.HomestayModel
 	HomestayBusinessModel model.HomestayBusinessModel
 	HomestayActivityModel model.HomestayActivityModel
+	HomestayCommentModel  model.HomestayCommentModel
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -24,5 +25,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		HomestayModel:         model.NewHomestayModel(sqlConn, c.Cache),
 		HomestayActivityModel: model.NewHomestayActivityModel(sqlConn, c.Cache),
 		HomestayBusinessModel: model.NewHomestayBusinessModel(sqlConn, c.Cache),
+		HomestayCommentModel:  model.NewHomestayCommentModel(sqlConn, c.Cache),
 	}
 }

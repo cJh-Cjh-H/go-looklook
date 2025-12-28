@@ -5,14 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestayBusiness/goodBossLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/logic/homestayBusiness/goodBossLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/model/homestayActivityModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayActivityModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/model/homestayBusinessModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayBusinessModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/model/vars.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/vars.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/goodBossLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/goodBossLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestayComment/commentListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/logic/homestayComment/commentListLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/model/homestayCommentModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayCommentModel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/model/homestayModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayModel.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/commentListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/commentListLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/svc/serviceContext.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

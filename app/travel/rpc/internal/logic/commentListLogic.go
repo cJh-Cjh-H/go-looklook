@@ -2,7 +2,7 @@ package logic
 
 import (
 	"context"
-
+	"github.com/pkg/errors"
 	"go-zero-looklook/app/travel/rpc/internal/svc"
 	"go-zero-looklook/app/travel/rpc/pb"
 
@@ -25,7 +25,12 @@ func NewCommentListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Comme
 
 // 民宿评论服务
 func (l *CommentListLogic) CommentList(in *pb.CommentListReq) (*pb.CommentListResp, error) {
-	// todo: add your logic here and delete this line
+	commentList, err := l.svcCtx.HomestayCommentModel.FindDIY(l.ctx, in.LastId, in.PageSize)
+	if err != nil {
+		return nil, errors.Wrapf(err, "Rpc.CommentListLogic FindDIY error.")
+	}
 
-	return &pb.CommentListResp{}, nil
+	return &pb.CommentListResp{
+		List: commentList,
+	}, nil
 }
