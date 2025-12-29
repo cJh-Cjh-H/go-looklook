@@ -5,9 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
-      <change afterPath="$PROJECT_DIR$/app/order/api/desc/order.api" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/order/rpc/pb/order.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/order/model/homestayOrderModel.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/order/model/homestayOrderModel_gen.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/order/model/vars.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/redisLock/redisLock.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/tool/Krand.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/uniqueid/sn.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/uniqueid/uniqueid.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/etc/order.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/etc/order.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/createHomestayOrderLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/createHomestayOrderLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/svc/serviceContext.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/rpc/etc/order.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/etc/order.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/rpc/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/rpc/internal/logic/createHomestayOrderLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/internal/logic/createHomestayOrderLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/rpc/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/internal/svc/serviceContext.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/travel/api/etc/travel.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/etc/travel.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,42 +57,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/travel/api.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/travel/rpc.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/usercenter/api.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/usercenter/rpc.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/go-zero-looklook/app/order/rpc&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;D:/go-zero-looklook/main.go&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build go-zero-looklook/app/travel/api.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/travel/rpc.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/usercenter/api.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/usercenter/rpc.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "master",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "D:/go-zero-looklook/pkg",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "D:/go-zero-looklook/main.go",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "settings.sync"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;,
-      &quot;mysql_aurora&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "mysql_aurora"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\go-zero-looklook\pkg" />
+      <recent name="D:\go-zero-looklook\pkg\tool" />
+      <recent name="D:\go-zero-looklook\app\order" />
       <recent name="D:\go-zero-looklook\app\order\rpc" />
       <recent name="D:\go-zero-looklook\app\order\api" />
-      <recent name="D:\go-zero-looklook\app\travel\rpc" />
-      <recent name="D:\go-zero-looklook\app\travel" />
-      <recent name="D:\go-zero-looklook\pkg" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\go-zero-looklook\app\order\rpc\pb" />

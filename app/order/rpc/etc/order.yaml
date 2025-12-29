@@ -16,3 +16,12 @@ Cache:
   - Host: "139.9.177.213:6379"
     Pass: ""
     Type: "node"
+#jwtAuth
+JwtAuth:
+  AccessSecret: "cjh090888"
+  AccessExpire: 36000
+#rpc
+TravelRpcConf:
+  Endpoints:
+    - 127.0.0.1:2003
+  NonBlock: true

@@ -18,6 +18,15 @@ OrderRpcConf:
     Hosts:
       - 139.9.177.213:2379
     Key: order.rpc
+PaymentRpcConf:
+  Etcd:
+    Hosts:
+      - 139.9.177.213:2379
+    Key: payment.rpc
 Log:
   ServiceName: order-api
   Level: error
+#jwtAuth
+JwtAuth:
+  AccessSecret: "cjh090888"
+  AccessExpire: 36000
