@@ -1,0 +1,18 @@
+Name: order.rpc
+ListenOn: 0.0.0.0:1002
+Mode: dev
+Etcd:
+  Hosts:
+    - 139.9.177.213:2379
+  Key: order.rpc
+Redis:
+  Host: "139.9.177.213:6379"
+  Type: "node"
+  Key: order.rpc
+  Pass: ""
+DB:
+  DataSource: "root:Mcjh0908.@tcp(139.9.177.213:3306)/LookLook?charset=utf8mb4&parseTime=true&loc=Local"
+Cache:
+  - Host: "139.9.177.213:6379"
+    Pass: ""
+    Type: "node"

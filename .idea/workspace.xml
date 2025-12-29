@@ -5,12 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
+      <change afterPath="$PROJECT_DIR$/app/order/api/desc/order.api" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/order/rpc/pb/order.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/api/internal/logic/homestayComment/commentListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/internal/logic/homestayComment/commentListLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/model/homestayCommentModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayCommentModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/model/homestayModel.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/model/homestayModel.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/logic/commentListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/logic/commentListLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/rpc/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/rpc/internal/svc/serviceContext.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +57,7 @@
     &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/go-zero-looklook/app/travel/rpc&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/go-zero-looklook/app/order/rpc&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
@@ -76,18 +73,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\go-zero-looklook\app\order\rpc" />
+      <recent name="D:\go-zero-looklook\app\order\api" />
       <recent name="D:\go-zero-looklook\app\travel\rpc" />
       <recent name="D:\go-zero-looklook\app\travel" />
       <recent name="D:\go-zero-looklook\pkg" />
-      <recent name="D:\go-zero-looklook" />
-      <recent name="D:\go-zero-looklook\api" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\go-zero-looklook\app\order\rpc\pb" />
+      <recent name="D:\go-zero-looklook\app\order\api\desc" />
       <recent name="D:\go-zero-looklook\app\travel\api\desc" />
       <recent name="D:\go-zero-looklook\app\travel\rpc\homestay" />
       <recent name="D:\go-zero-looklook\app\travel\rpc" />
-      <recent name="D:\go-zero-looklook\app\travel\api" />
-      <recent name="D:\go-zero-looklook\app\travel\api\internal" />
     </key>
   </component>
   <component name="RunDashboard">
