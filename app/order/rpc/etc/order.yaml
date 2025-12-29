@@ -22,6 +22,7 @@ JwtAuth:
   AccessExpire: 36000
 #rpc
 TravelRpcConf:
-  Endpoints:
-    - 127.0.0.1:2003
-  NonBlock: true
+  Etcd:
+    Hosts:
+      - 139.9.177.213:2379
+    Key: travel.rpc

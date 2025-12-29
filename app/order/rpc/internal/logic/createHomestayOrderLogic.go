@@ -43,7 +43,9 @@ func (l *CreateHomestayOrderLogic) CreateHomestayOrder(in *pb.CreateHomestayOrde
 	if err != nil {
 		return nil, errors.Wrapf(err, "获取锁失败，请稍后重试")
 	}
-	
+	//释放锁
+	defer redisLock.Unlock(l.svcCtx.RedisClient, lockKey, "1")
+
 	//1、Create Order
 	if in.LiveEndTime <= in.LiveStartTime {
 		return nil, errors.Wrapf(xerr.NewErrMsg("Stay at least one night"), "Place an order at a B&B. The end time of your stay must be greater than the start time. in : %+v", in)

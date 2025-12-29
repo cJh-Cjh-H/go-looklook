@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
-      <change afterPath="$PROJECT_DIR$/app/order/model/homestayOrderModel.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/order/model/homestayOrderModel_gen.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/order/model/vars.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/redisLock/redisLock.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/tool/Krand.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/uniqueid/sn.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/uniqueid/uniqueid.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/order/api/etc/order.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/etc/order.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/createHomestayOrderLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/createHomestayOrderLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/order/api/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/svc/serviceContext.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/order.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/order/rpc/etc/order.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/etc/order.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/order/rpc/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/internal/config/config.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/order/rpc/internal/logic/createHomestayOrderLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/internal/logic/createHomestayOrderLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/order/rpc/internal/svc/serviceContext.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/internal/svc/serviceContext.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/travel/api/etc/travel.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/travel/api/etc/travel.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/rpc/order.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/order.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pkg/redisLock/redisLock.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/redisLock/redisLock.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +48,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build go-zero-looklook/app/order/api.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/order/rpc.executor": "Run",
     "Go Build.go build go-zero-looklook/app/travel/api.executor": "Run",
     "Go Build.go build go-zero-looklook/app/travel/rpc.executor": "Run",
     "Go Build.go build go-zero-looklook/app/usercenter/api.executor": "Run",
@@ -110,14 +100,23 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/travel/rpc">
-    <configuration name="go build go-zero-looklook/app/travel/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/order/rpc">
+    <configuration name="go build go-zero-looklook/app/order/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="go-zero-looklook" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="go-zero-looklook/app/travel/api" />
+      <package value="go-zero-looklook/app/order/api" />
       <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/app/travel/api/travel.go" />
+      <filePath value="$PROJECT_DIR$/app/order/api/order.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build go-zero-looklook/app/order/rpc" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-zero-looklook" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-zero-looklook/app/order/rpc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/order/rpc/order.go" />
       <method v="2" />
     </configuration>
     <configuration name="go build go-zero-looklook/app/travel/rpc" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
@@ -149,10 +148,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build go-zero-looklook/app/travel/rpc" />
-        <item itemvalue="Go Build.go build go-zero-looklook/app/travel/api" />
-        <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/rpc" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/order/rpc" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/order/api" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/api" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/rpc" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/travel/rpc" />
       </list>
     </recent_temporary>
   </component>
