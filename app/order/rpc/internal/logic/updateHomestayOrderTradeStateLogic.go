@@ -34,7 +34,7 @@ func (l *UpdateHomestayOrderTradeStateLogic) UpdateHomestayOrderTradeState(in *p
 
 	// 1、Check current order
 	homestayOrder, err := l.svcCtx.HomestayOrderModel.FindOneBySn(l.ctx, in.Sn)
-	if err != nil && err != model.ErrNotFound {
+	if err != nil && !errors.Is(err, model.ErrNotFound) {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "UpdateHomestayOrderTradeState FindOneBySn db err : %v , in:%+v", err, in)
 	}
 	if homestayOrder == nil {

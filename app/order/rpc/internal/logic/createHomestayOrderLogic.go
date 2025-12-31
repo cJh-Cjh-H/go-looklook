@@ -22,7 +22,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-const CloseOrderTimeMinutes = 1 //defer close order time
+const CloseOrderTimeMinutes = 30 //defer close order time
 type CreateHomestayOrderLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
