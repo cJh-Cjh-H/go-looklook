@@ -2,6 +2,10 @@ package logic
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
+	"go-zero-looklook/app/order/model"
+	"go-zero-looklook/pkg/xerr"
 
 	"go-zero-looklook/app/order/rpc/internal/svc"
 	"go-zero-looklook/app/order/rpc/pb"
@@ -25,7 +29,22 @@ func NewHomestayOrderDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext
 
 // 民宿订单详情
 func (l *HomestayOrderDetailLogic) HomestayOrderDetail(in *pb.HomestayOrderDetailReq) (*pb.HomestayOrderDetailResp, error) {
-	// todo: add your logic here and delete this line
+	homestayOrder, err := l.svcCtx.HomestayOrderModel.FindOneBySn(l.ctx, in.Sn)
+	if err != nil && !errors.Is(err, model.ErrNotFound) {
+		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "HomestayOrderModel  FindOneBySn db err : %v , sn : %s", err, in.Sn)
+	}
 
-	return &pb.HomestayOrderDetailResp{}, nil
+	var resp pb.HomestayOrder
+	if homestayOrder != nil {
+		_ = copier.Copy(&resp, homestayOrder)
+
+		resp.CreateTime = homestayOrder.CreateTime.Unix()
+		resp.LiveStartDate = homestayOrder.LiveStartDate.Unix()
+		resp.LiveEndDate = homestayOrder.LiveEndDate.Unix()
+
+	}
+
+	return &pb.HomestayOrderDetailResp{
+		HomestayOrder: &resp,
+	}, nil
 }

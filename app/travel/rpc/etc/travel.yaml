@@ -6,13 +6,13 @@ Etcd:
     - 139.9.177.213:2379
   Key: travel.rpc
 Redis:
-  Host: "139.9.177.213:6379"
+  Host: "127.0.0.1:6379"
   Type: "node"
   Key: travel.rpc
   Pass: ""
 DB:
   DataSource: "root:Mcjh0908.@tcp(139.9.177.213:3306)/LookLook?charset=utf8mb4&parseTime=true&loc=Local"
 Cache:
-  - Host: "139.9.177.213:6379"
+  - Host: "127.0.0.1:6379"
     Pass: ""
     Type: "node"

@@ -11,6 +11,7 @@ type Config struct {
 		AccessSecret string
 		AccessExpire int64
 	}
+	PaymentRpcConf    zrpc.RpcClientConf
 	UsercenterRpcConf zrpc.RpcClientConf
 	TravelRpcConf     zrpc.RpcClientConf
 	OrderRpcConf      zrpc.RpcClientConf

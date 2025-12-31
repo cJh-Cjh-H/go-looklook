@@ -2,9 +2,15 @@ package homestayOrder
 
 import (
 	"context"
-
+	"github.com/jinzhu/copier"
+	"github.com/pkg/errors"
 	"go-zero-looklook/app/order/api/internal/svc"
 	"go-zero-looklook/app/order/api/internal/types"
+	"go-zero-looklook/app/order/model"
+	"go-zero-looklook/app/order/rpc/order"
+	"go-zero-looklook/app/payment/rpc/payment"
+	"go-zero-looklook/pkg/ctxdata"
+	"go-zero-looklook/pkg/xerr"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,8 +30,48 @@ func NewUserHomestayOrderDetailLogic(ctx context.Context, svcCtx *svc.ServiceCon
 	}
 }
 
-func (l *UserHomestayOrderDetailLogic) UserHomestayOrderDetail(req *types.UserHomestayOrderDetailReq) (resp *types.UserHomestayOrderDetailResp, err error) {
-	// todo: add your logic here and delete this line
+func (l *UserHomestayOrderDetailLogic) UserHomestayOrderDetail(req *types.UserHomestayOrderDetailReq) (*types.UserHomestayOrderDetailResp, error) {
 
-	return
+	userId := ctxdata.GetUidFromCtx(l.ctx)
+
+	resp, err := l.svcCtx.OrderRpc.HomestayOrderDetail(l.ctx, &order.HomestayOrderDetailReq{
+		Sn: req.Sn,
+	})
+	if err != nil {
+		return nil, errors.Wrapf(xerr.NewErrMsg("get homestay order detail fail"), " rpc get HomestayOrderDetail err:%v , sn : %s", err, req.Sn)
+	}
+
+	var typesOrderDetail types.UserHomestayOrderDetailResp
+	if resp.HomestayOrder != nil && resp.HomestayOrder.UserId == userId {
+
+		copier.Copy(&typesOrderDetail, resp.HomestayOrder)
+
+		// format price.
+		typesOrderDetail.OrderTotalPrice = float64(resp.HomestayOrder.OrderTotalPrice)
+		typesOrderDetail.FoodTotalPrice = float64(resp.HomestayOrder.FoodTotalPrice)
+		typesOrderDetail.HomestayTotalPrice = float64(resp.HomestayOrder.HomestayTotalPrice)
+		typesOrderDetail.HomestayPrice = float64(resp.HomestayOrder.HomestayPrice)
+		typesOrderDetail.FoodPrice = float64(resp.HomestayOrder.FoodPrice)
+		typesOrderDetail.MarketHomestayPrice = float64(resp.HomestayOrder.MarketHomestayPrice)
+
+		// payment info.
+		if typesOrderDetail.TradeState != model.HomestayOrderTradeStateCancel && typesOrderDetail.TradeState != model.HomestayOrderTradeStateWaitPay {
+			paymentResp, err := l.svcCtx.PaymentRpc.GetPaymentSuccessRefundByOrderSn(l.ctx, &payment.GetPaymentSuccessRefundByOrderSnReq{
+				OrderSn: resp.HomestayOrder.Sn,
+			})
+			if err != nil {
+				logx.WithContext(l.ctx).Errorf("Failed to get order payment information err : %v , orderSn:%s", err, resp.HomestayOrder.Sn)
+			}
+
+			if paymentResp.PaymentDetail != nil {
+				typesOrderDetail.PayTime = paymentResp.PaymentDetail.PayTime
+				typesOrderDetail.PayType = paymentResp.PaymentDetail.PayMode
+			}
+		}
+
+		return &typesOrderDetail, nil
+	}
+
+	return nil, errors.New("你无权查看他人订单信息")
+
 }

@@ -1,0 +1,28 @@
+Name: payment-rpc
+ListenOn: 0.0.0.0:1003
+Mode: dev
+
+Log:
+  ServiceName: payment-rpc
+  Level: error
+
+Redis:
+  Host: "127.0.0.1:6379"
+  Type: "node"
+  Key: order.rpc
+  Pass: ""
+DB:
+  DataSource: "root:Mcjh0908.@tcp(139.9.177.213:3306)/LookLook?charset=utf8mb4&parseTime=true&loc=Local"
+Cache:
+  - Host: "127.0.0.1:6379"
+    Pass: ""
+    Type: "node"
+#pay success notify order-mq for kq(kafka pub sub)
+KqPaymentUpdatePayStatusConf:
+  Brokers:
+    - 139.9.177.213:9092
+  Topic: payment-update-paystatus-topic
+
+
+
+

@@ -1,0 +1,24 @@
+Name: mqueue-job
+Mode: dev
+Log:
+  ServiceName: mqueue-job
+  Level: error
+Redis:
+  Host: "127.0.0.1:6379"
+  Type: "node"
+  Key: order.rpc
+  Pass: ""
+
+
+#rpc service.
+OrderRpcConf:
+  Etcd:
+    Hosts:
+      - 139.9.177.213:2379
+    Key: order.rpc
+
+UsercenterRpcConf:
+  Etcd:
+    Hosts:
+      - 139.9.177.213:2379
+    Key: usercenter.rpc

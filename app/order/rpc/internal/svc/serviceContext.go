@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"github.com/hibiken/asynq"
 	"github.com/zeromicro/go-zero/core/stores/redis"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 	"github.com/zeromicro/go-zero/zrpc"
@@ -12,6 +13,8 @@ import (
 type ServiceContext struct {
 	Config config.Config
 
+	AsynqClient *asynq.Client
+
 	TravelRpc          homestayservice.HomestayService
 	RedisClient        *redis.Redis
 	HomestayOrderModel model.HomestayOrderModel
@@ -19,7 +22,10 @@ type ServiceContext struct {
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
-		Config:             c,
+		Config: c,
+
+		AsynqClient: newAsynqClient(c),
+
 		TravelRpc:          homestayservice.NewHomestayService(zrpc.MustNewClient(c.TravelRpcConf)),
 		HomestayOrderModel: model.NewHomestayOrderModel(sqlx.NewMysql(c.DB.DataSource), c.Cache),
 		RedisClient:        redis.MustNewRedis(c.Redis.RedisConf),

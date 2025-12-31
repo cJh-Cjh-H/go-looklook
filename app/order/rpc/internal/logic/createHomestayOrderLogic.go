@@ -2,8 +2,11 @@ package logic
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"github.com/hibiken/asynq"
 	"github.com/pkg/errors"
+	"go-zero-looklook/app/mqueue/job/jobtype"
 	"go-zero-looklook/app/order/model"
 	"go-zero-looklook/app/travel/rpc/homestayservice"
 	"go-zero-looklook/pkg/redisLock"
@@ -19,6 +22,7 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
+const CloseOrderTimeMinutes = 1 //defer close order time
 type CreateHomestayOrderLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
@@ -94,7 +98,7 @@ func (l *CreateHomestayOrderLogic) CreateHomestayOrder(in *pb.CreateHomestayOrde
 	order.HomestayTotalPrice = int64(int64(resp.Homestay.HomestayPrice) * liveDays) //Calculate the total price of the B&B
 	if in.IsFood {
 		order.NeedFood = model.HomestayOrderNeedFoodYes
-		//Calculate the total price of the meal.
+		//计算总价格
 		order.FoodTotalPrice = int64(int64(resp.Homestay.FoodPrice) * in.LivePeopleNum * liveDays)
 	}
 
@@ -104,18 +108,18 @@ func (l *CreateHomestayOrderLogic) CreateHomestayOrder(in *pb.CreateHomestayOrde
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "Order Database Exception order : %+v , err: %v", order, err)
 	}
+
+	//2、订单任务延迟关闭。
+	payload, err := json.Marshal(jobtype.DeferCloseHomestayOrderPayload{Sn: order.Sn})
+	if err != nil {
+		logx.WithContext(l.ctx).Errorf("create defer close order task json Marshal fail err :%+v , sn : %s", err, order.Sn)
+	} else {
+		_, err = l.svcCtx.AsynqClient.Enqueue(asynq.NewTask(jobtype.DeferCloseHomestayOrder, payload), asynq.ProcessIn(CloseOrderTimeMinutes*time.Minute))
+		if err != nil {
+			logx.WithContext(l.ctx).Errorf("create defer close order task insert queue fail err :%+v , sn : %s", err, order.Sn)
+		}
+	}
 	return &pb.CreateHomestayOrderResp{
 		Sn: order.Sn,
 	}, nil
-	//2、Delayed closing of order tasks.
-	//payload, err := json.Marshal(jobtype.DeferCloseHomestayOrderPayload{Sn: order.Sn})
-	//if err != nil {
-	//	logx.WithContext(l.ctx).Errorf("create defer close order task json Marshal fail err :%+v , sn : %s", err, order.Sn)
-	//} else {
-	//	_, err = l.svcCtx.AsynqClient.Enqueue(asynq.NewTask(jobtype.DeferCloseHomestayOrder, payload), asynq.ProcessIn(CloseOrderTimeMinutes*time.Minute))
-	//	if err != nil {
-	//		logx.WithContext(l.ctx).Errorf("create defer close order task insert queue fail err :%+v , sn : %s", err, order.Sn)
-	//	}
-	//}
-
 }
