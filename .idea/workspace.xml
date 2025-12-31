@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
+      <change afterPath="$PROJECT_DIR$/Kafka和Async 的作用.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/order/rpc/internal/logic/createHomestayOrderLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/internal/logic/createHomestayOrderLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/order/rpc/internal/logic/updateHomestayOrderTradeStateLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/internal/logic/updateHomestayOrderTradeStateLogic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/payment/api/internal/svc/wxPayClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/internal/svc/wxPayClient.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,11 +87,11 @@
       <recent name="D:\go-zero-looklook\app\order\mq" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\go-zero-looklook" />
       <recent name="D:\go-zero-looklook\app\mqueue" />
       <recent name="D:\go-zero-looklook\app" />
       <recent name="D:\go-zero-looklook\app\order\mq\internal" />
       <recent name="D:\go-zero-looklook\app\payment" />
-      <recent name="D:\go-zero-looklook\app\order\rpc\pb" />
     </key>
   </component>
   <component name="RunDashboard">
