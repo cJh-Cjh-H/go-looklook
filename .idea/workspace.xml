@@ -5,8 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ceb1aca1-6fc1-4a8c-a767-0e7e7d14fdc1" name="Changes" comment="gozer-look-look&#10;usercenter用户中心的api代码初步生成">
-      <change afterPath="$PROJECT_DIR$/Kafka和Async 的作用.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/html/confirm.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/pQrcode/pay.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pkg/test/test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/internal/handler/homestayOrder/createHomestayOrderHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/handler/homestayOrder/createHomestayOrderHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/internal/handler/homestayOrder/userHomestayOrderDetailHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/handler/homestayOrder/userHomestayOrderDetailHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/internal/handler/homestayOrder/userHomestayOrderListHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/handler/homestayOrder/userHomestayOrderListHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/createHomestayOrderLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/createHomestayOrderLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/userHomestayOrderDetailLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/userHomestayOrderDetailLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/userHomestayOrderListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/api/internal/logic/homestayOrder/userHomestayOrderListLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/order/rpc/internal/logic/userHomestayOrderListLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/order/rpc/internal/logic/userHomestayOrderListLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/desc/payment.api" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/desc/payment.api" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/desc/thirdPayment/thirdPayment.api" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/desc/thirdPayment/thirdPayment.api" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/internal/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/internal/config/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/internal/handler/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/internal/handler/routes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/internal/handler/thirdPayment/thirdPaymentWxPayCallbackHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/internal/handler/thirdPayment/thirdPaymentWxPayCallbackHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/internal/handler/thirdPayment/thirdPaymentwxPayHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/internal/handler/thirdPayment/thirdPaymentwxPayHandler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/internal/logic/thirdPayment/thirdPaymentWxPayCallbackLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/internal/logic/thirdPayment/thirdPaymentWxPayCallbackLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/internal/logic/thirdPayment/thirdPaymentwxPayLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/internal/logic/thirdPayment/thirdPaymentwxPayLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/internal/svc/wxPayClient.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/internal/svc/wxPayClient.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/api/internal/types/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/api/internal/types/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/rpc/etc/payment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/rpc/etc/payment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/rpc/internal/logic/createPaymentLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/rpc/internal/logic/createPaymentLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/payment/rpc/internal/logic/getPaymentBySnLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/payment/rpc/internal/logic/getPaymentBySnLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByUserIdLogic.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/usercenter/rpc/internal/logic/getUserAuthByUserIdLogic.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,43 +67,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/mqueue/job.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/mqueue/scheduler.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/order/api.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/order/mq.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/order/rpc.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/payment/rpc.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/travel/api.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/travel/rpc.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/usercenter/api.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build go-zero-looklook/app/usercenter/rpc.executor&quot;: &quot;Run&quot;,
-    &quot;Go Build.go build usercenter.go.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/go-zero-looklook/app/order/rpc/internal/svc&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;D:/go-zero-looklook/main.go&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build go-zero-looklook/app/mqueue/job.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/mqueue/scheduler.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/order/api.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/order/mq.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/order/rpc.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/payment/api.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/payment/rpc.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/travel/api.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/travel/rpc.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/usercenter/api.executor": "Run",
+    "Go Build.go build go-zero-looklook/app/usercenter/rpc.executor": "Run",
+    "Go Build.go build go-zero-looklook/pkg/test.executor": "Run",
+    "Go Build.go build payment.go (1).executor": "Run",
+    "Go Build.go build payment.go.executor": "Run",
+    "Go Build.go build usercenter.go.executor": "Run",
+    "JavaScript Debug.confirm.html.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "master",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "D:/go-zero-looklook/app/order/rpc/internal/svc",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "D:/go-zero-looklook/main.go",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;,
-      &quot;mysql_aurora&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "mysql_aurora"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\go-zero-looklook\app\order\rpc\internal\svc" />
@@ -87,11 +118,11 @@
       <recent name="D:\go-zero-looklook\app\order\mq" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\go-zero-looklook\app\payment\api\desc" />
+      <recent name="D:\go-zero-looklook\app\payment\api" />
+      <recent name="D:\go-zero-looklook\pkg\test" />
       <recent name="D:\go-zero-looklook" />
       <recent name="D:\go-zero-looklook\app\mqueue" />
-      <recent name="D:\go-zero-looklook\app" />
-      <recent name="D:\go-zero-looklook\app\order\mq\internal" />
-      <recent name="D:\go-zero-looklook\app\payment" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -101,43 +132,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/order/rpc">
-    <configuration name="go build go-zero-looklook/app/mqueue/job" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="go-zero-looklook" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="go-zero-looklook/app/mqueue/job" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/app/mqueue/job/mqueue.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build go-zero-looklook/app/mqueue/scheduler" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="go-zero-looklook" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="go-zero-looklook/app/mqueue/scheduler" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/app/mqueue/scheduler/mqueue.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build go-zero-looklook/app/order/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="go-zero-looklook" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="go-zero-looklook/app/order/api" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/app/order/api/order.go" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build go-zero-looklook/app/order/mq" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="go-zero-looklook" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="PACKAGE" />
-      <package value="go-zero-looklook/app/order/mq" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/app/order/mq/order.go" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Go Build.go build go-zero-looklook/app/payment/api">
     <configuration name="go build go-zero-looklook/app/order/rpc" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="go-zero-looklook" />
       <working_directory value="$PROJECT_DIR$" />
@@ -147,13 +142,50 @@
       <filePath value="$PROJECT_DIR$/app/order/rpc/order.go" />
       <method v="2" />
     </configuration>
+    <configuration name="go build go-zero-looklook/app/payment/api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-zero-looklook" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-zero-looklook/app/payment/api" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/payment/api/payment.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build go-zero-looklook/app/usercenter/rpc" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-zero-looklook" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-zero-looklook/app/usercenter/rpc" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/usercenter/rpc/usercenter.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build payment.go (1)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go-zero-looklook" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <package value="go-zero-looklook" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/app/payment/rpc/payment.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="confirm.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/go-zero-looklook/pkg/html/confirm.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build go-zero-looklook/app/order/rpc" />
+      <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/rpc" />
+      <item itemvalue="Go Build.go build payment.go (1)" />
+      <item itemvalue="Go Build.go build go-zero-looklook/app/payment/api" />
+      <item itemvalue="JavaScript Debug.confirm.html" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build go-zero-looklook/app/payment/api" />
+        <item itemvalue="JavaScript Debug.confirm.html" />
+        <item itemvalue="Go Build.go build go-zero-looklook/app/usercenter/rpc" />
         <item itemvalue="Go Build.go build go-zero-looklook/app/order/rpc" />
-        <item itemvalue="Go Build.go build go-zero-looklook/app/order/mq" />
-        <item itemvalue="Go Build.go build go-zero-looklook/app/mqueue/scheduler" />
-        <item itemvalue="Go Build.go build go-zero-looklook/app/mqueue/job" />
-        <item itemvalue="Go Build.go build go-zero-looklook/app/order/api" />
+        <item itemvalue="Go Build.go build payment.go (1)" />
       </list>
     </recent_temporary>
   </component>

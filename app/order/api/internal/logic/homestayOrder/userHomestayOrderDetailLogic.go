@@ -21,7 +21,7 @@ type UserHomestayOrderDetailLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
-// 用户订单明细
+// NewUserHomestayOrderDetailLogic 用户订单明细
 func NewUserHomestayOrderDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserHomestayOrderDetailLogic {
 	return &UserHomestayOrderDetailLogic{
 		Logger: logx.WithContext(ctx),

@@ -21,6 +21,16 @@ func ThirdPaymentwxPayHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 
 		l := thirdPayment.NewThirdPaymentwxPayLogic(r.Context(), ctx)
 		resp, err := l.ThirdPaymentwxPay(req)
-		result.HttpResult(r, w, resp, err)
+		if err != nil {
+			result.ParamErrorResult(r, w, err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "image/png")
+		w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+		w.Header().Set("Pragma", "no-cache")
+		w.Header().Set("Expires", "0")
+		w.Write(resp)
+		//result.HttpResult(r, w, resp, err)
 	}
 }

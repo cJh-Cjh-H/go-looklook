@@ -10,8 +10,8 @@ type Config struct {
 	JwtAuth struct {
 		AccessSecret string
 	}
-	WxMiniConf WxMiniConf
-	WxPayConf  WxPayConf
+	//WxMiniConf WxMiniConf
+	//WxPayConf  WxPayConf
 
 	PaymentRpcConf    zrpc.RpcClientConf
 	OrderRpcConf      zrpc.RpcClientConf

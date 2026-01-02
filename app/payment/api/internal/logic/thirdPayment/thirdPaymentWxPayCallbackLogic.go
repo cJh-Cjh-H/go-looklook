@@ -2,24 +2,30 @@ package thirdPayment
 
 import (
 	"context"
+	"go-zero-looklook/app/order/rpc/order"
 	"net/http"
 
 	"go-zero-looklook/app/payment/api/internal/svc"
 	"go-zero-looklook/app/payment/api/internal/types"
 	"go-zero-looklook/app/payment/model"
-	"go-zero-looklook/app/payment/rpc/payment"
 	"go-zero-looklook/pkg/xerr"
 
 	"github.com/pkg/errors"
-	"github.com/wechatpay-apiv3/wechatpay-go/core/auth/verifiers"
-	"github.com/wechatpay-apiv3/wechatpay-go/core/downloader"
-	"github.com/wechatpay-apiv3/wechatpay-go/core/notify"
-	"github.com/wechatpay-apiv3/wechatpay-go/services/payments"
+
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
 var ErrWxPayCallbackError = xerr.NewErrMsg("wechat pay callback fail")
 
+type Payment struct {
+	Sn             string
+	Payer          string
+	SuccessTime    string
+	TradeState     string
+	TradeStateDesc string
+	TradeType      string
+	TransactionId  string
+}
 type ThirdPaymentcallbackLogic struct {
 	logx.Logger
 	ctx    context.Context
@@ -40,26 +46,15 @@ func NewThirdPaymentWxPayCallbackLogic(ctx context.Context, svcCtx *svc.ServiceC
 	}
 }
 
-func (l *ThirdPaymentWxPayCallbackLogic) ThirdPaymentWxPayCallback(rw http.ResponseWriter, req *http.Request) (*types.ThirdPaymentWxPayCallbackResp, error) {
+func (l *ThirdPaymentWxPayCallbackLogic) ThirdPaymentWxPayCallback(rw http.ResponseWriter, req *http.Request, sn string) (*types.ThirdPaymentWxPayCallbackResp, error) {
 
-	//Retrieve the local merchant certificate private key.
-	_, err := svc.NewWxPayClientV3(l.svcCtx.Config)
-	if err != nil {
-		return nil, err
-	}
-
-	// Get platform certificate accessor
-	certVisitor := downloader.MgrInstance().GetCertificateVisitor(l.svcCtx.Config.WxPayConf.MchId)
-	handler := notify.NewNotifyHandler(l.svcCtx.Config.WxPayConf.APIv3Key, verifiers.NewSHA256WithRSAVerifier(certVisitor))
-	//Verifying signatures, parsing data
-	transaction := new(payments.Transaction)
-	_, err = handler.ParseNotifyRequest(context.Background(), req, transaction)
-	if err != nil {
-		return nil, errors.Wrapf(ErrWxPayCallbackError, "Failed to parse data ,err:%v", err)
+	p := &Payment{
+		Sn:         sn,
+		TradeState: SUCCESS,
 	}
 
 	returnCode := "SUCCESS"
-	err = l.verifyAndUpdateState(transaction)
+	err := l.verifyAndUpdateState(p)
 	if err != nil {
 		returnCode = "FAIL"
 	}
@@ -67,48 +62,55 @@ func (l *ThirdPaymentWxPayCallbackLogic) ThirdPaymentWxPayCallback(rw http.Respo
 	return &types.ThirdPaymentWxPayCallbackResp{
 		ReturnCode: returnCode,
 	}, err
-
 }
 
 // Verify and update relevant flow data
-func (l *ThirdPaymentWxPayCallbackLogic) verifyAndUpdateState(notifyTrasaction *payments.Transaction) error {
+func (l *ThirdPaymentWxPayCallbackLogic) verifyAndUpdateState(pay *Payment) error {
 
-	paymentResp, err := l.svcCtx.PaymentRpc.GetPaymentBySn(l.ctx, &payment.GetPaymentBySnReq{
-		Sn: *notifyTrasaction.OutTradeNo,
+	//paymentResp, err := l.svcCtx.PaymentRpc.GetPaymentBySn(l.ctx, &payment.GetPaymentBySnReq{
+	//	Sn: pay.Sn,
+	//})
+	//fmt.Printf("paymentResp:%v", paymentResp)
+	//if err != nil || paymentResp.PaymentDetail.Id == 0 {
+	//	return errors.Wrapf(ErrWxPayCallbackError, "Failed to get payment flow record err:%v ,notifyTrasaction:%+v ", err, pay)
+	//}
+
+	//// Judgment status
+	//payStatus := l.getPayStatusByWXPayTradeState(pay.TradeState)
+	//if payStatus == model.ThirdPaymentPayTradeStateSuccess {
+	//	//付款通知Payment Notification.
+	//	if paymentResp.PaymentDetail.PayStatus != model.ThirdPaymentPayTradeStateWait {
+	//		return nil
+	//	}
+	//
+	//	// Update the flow status.
+	//	if _, err = l.svcCtx.PaymentRpc.UpdateTradeState(l.ctx, &payment.UpdateTradeStateReq{
+	//		Sn:             pay.Sn,
+	//		TradeState:     "已支付",
+	//		TransactionId:  pay.TransactionId,
+	//		TradeType:      "微信支付",
+	//		TradeStateDesc: pay.TradeStateDesc,
+	//		PayStatus:      l.getPayStatusByWXPayTradeState(pay.TradeState),
+	//	}); err != nil {
+	//		return errors.Wrapf(ErrWxPayCallbackError, "更新流水状态失败  err:%v , notifyTrasaction:%v ", err, pay)
+	//	}
+	//
+	//} else if payStatus == model.ThirdPaymentPayTradeStateWait {
+	//	//退款通知。Refund notification @todo to be done later, not needed at this time
+	//
+	//}
+	orderResp, err := l.svcCtx.OrderRpc.HomestayOrderDetail(l.ctx, &order.HomestayOrderDetailReq{
+		Sn: pay.Sn,
 	})
-	if err != nil || paymentResp.PaymentDetail.Id == 0 {
-		return errors.Wrapf(ErrWxPayCallbackError, "Failed to get payment flow record err:%v ,notifyTrasaction:%+v ", err, notifyTrasaction)
+	if orderResp.HomestayOrder.TradeState != 0 {
+		return errors.New("只有未支付的订单才可以支付")
 	}
-
-	//比对金额
-	notifyPayTotal := *notifyTrasaction.Amount.PayerTotal
-	if paymentResp.PaymentDetail.PayTotal != notifyPayTotal {
-		return errors.Wrapf(ErrWxPayCallbackError, "Order amount exception  notifyPayTotal:%v , notifyTrasaction:%v ", notifyPayTotal, notifyTrasaction)
-	}
-
-	// Judgment status
-	payStatus := l.getPayStatusByWXPayTradeState(*notifyTrasaction.TradeState)
-	if payStatus == model.ThirdPaymentPayTradeStateSuccess {
-		//Payment Notification.
-
-		if paymentResp.PaymentDetail.PayStatus != model.ThirdPaymentPayTradeStateWait {
-			return nil
-		}
-
-		// Update the flow status.
-		if _, err = l.svcCtx.PaymentRpc.UpdateTradeState(l.ctx, &payment.UpdateTradeStateReq{
-			Sn:             *notifyTrasaction.OutTradeNo,
-			TradeState:     *notifyTrasaction.TradeState,
-			TransactionId:  *notifyTrasaction.TransactionId,
-			TradeType:      *notifyTrasaction.TradeType,
-			TradeStateDesc: *notifyTrasaction.TradeStateDesc,
-			PayStatus:      l.getPayStatusByWXPayTradeState(*notifyTrasaction.TradeState),
-		}); err != nil {
-			return errors.Wrapf(ErrWxPayCallbackError, "更新流水状态失败  err:%v , notifyTrasaction:%v ", err, notifyTrasaction)
-		}
-
-	} else if payStatus == model.ThirdPaymentPayTradeStateWait {
-		//Refund notification @todo to be done later, not needed at this time
+	_, err = l.svcCtx.OrderRpc.UpdateHomestayOrderTradeState(l.ctx, &order.UpdateHomestayOrderTradeStateReq{
+		Sn:         pay.Sn,
+		TradeState: 1,
+	})
+	if err != nil {
+		return errors.Wrapf(err, "Payment将订单状态改为1时错误")
 	}
 
 	return nil
@@ -126,7 +128,6 @@ const (
 )
 
 func (l *ThirdPaymentWxPayCallbackLogic) getPayStatusByWXPayTradeState(wxPayTradeState string) int64 {
-
 	switch wxPayTradeState {
 	case SUCCESS: //支付成功
 		return model.ThirdPaymentPayTradeStateSuccess

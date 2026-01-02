@@ -9,7 +9,7 @@ import (
 	"go-zero-looklook/app/order/api/internal/types"
 )
 
-// 用户订单明细
+// UserHomestayOrderDetailHandler 用户订单明细
 func UserHomestayOrderDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.UserHomestayOrderDetailReq

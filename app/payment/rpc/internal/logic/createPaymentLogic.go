@@ -2,11 +2,13 @@ package logic
 
 import (
 	"context"
+	"fmt"
 	"go-zero-looklook/app/payment/model"
 	"go-zero-looklook/app/payment/rpc/internal/svc"
 	"go-zero-looklook/app/payment/rpc/pb"
 	"go-zero-looklook/pkg/uniqueid"
 	"go-zero-looklook/pkg/xerr"
+	"time"
 
 	"github.com/pkg/errors"
 	"github.com/zeromicro/go-zero/core/logx"
@@ -36,8 +38,9 @@ func (l *CreatePaymentLogic) CreatePayment(in *pb.CreatePaymentReq) (*pb.CreateP
 	data.PayTotal = in.PayTotal
 	data.OrderSn = in.OrderSn
 	data.ServiceType = model.ThirdPaymentServiceTypeHomestayOrder
-
+	data.PayTime = time.Now()
 	_, err := l.svcCtx.ThirdPaymentModel.Insert(l.ctx, nil, data)
+	fmt.Printf("err:%v", err)
 	if err != nil {
 		return nil, errors.Wrapf(xerr.NewErrCode(xerr.DB_ERROR), "create wechat pay prepayorder db insert fail , err:%v ,data : %+v  ", err, data)
 	}

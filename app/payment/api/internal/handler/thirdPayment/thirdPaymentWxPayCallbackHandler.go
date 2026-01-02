@@ -2,6 +2,9 @@ package thirdPayment
 
 import (
 	"fmt"
+	"github.com/zeromicro/go-zero/rest/httpx"
+	"go-zero-looklook/app/payment/api/internal/types"
+	"go-zero-looklook/pkg/result"
 	"net/http"
 
 	"go-zero-looklook/app/payment/api/internal/logic/thirdPayment"
@@ -12,9 +15,13 @@ import (
 
 func ThirdPaymentWxPayCallbackHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-
 		l := thirdPayment.NewThirdPaymentWxPayCallbackLogic(r.Context(), ctx)
-		resp, err := l.ThirdPaymentWxPayCallback(w, r)
+		var req types.ThirdPaymentWxPayCallbackReq
+		if err := httpx.Parse(r, &req); err != nil {
+			result.ParamErrorResult(r, w, err)
+			return
+		}
+		resp, err := l.ThirdPaymentWxPayCallback(w, r, req.Sn)
 
 		if err != nil {
 			logx.WithContext(r.Context()).Errorf("【API-ERR】 ThirdPaymentWxPayCallbackHandler : %+v ", err)
@@ -22,8 +29,8 @@ func ThirdPaymentWxPayCallbackHandler(ctx *svc.ServiceContext) http.HandlerFunc 
 		} else {
 			w.WriteHeader(http.StatusOK)
 		}
-
 		logx.Infof("ReturnCode : %s ", resp.ReturnCode)
 		fmt.Fprint(w.(http.ResponseWriter), resp.ReturnCode)
+		result.HttpResult(r, w, resp, err)
 	}
 }

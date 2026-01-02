@@ -1,7 +1,10 @@
 Name: payment-rpc
 ListenOn: 0.0.0.0:1003
 Mode: dev
-
+Etcd:
+  Hosts:
+    - 139.9.177.213:2379
+  Key: payment.rpc
 Log:
   ServiceName: payment-rpc
   Level: error

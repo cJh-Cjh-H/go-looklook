@@ -5,6 +5,8 @@
       <methods>
         <method importPath="go-zero-looklook/app/travel/rpc/homestayservice" receiver="HomestayService" name="HomestayBusinessDetail" />
         <method importPath="go-zero-looklook/app/travel/rpc/homestayservice" receiver="HomestayService" name="GoodBoss" />
+        <method importPath="go-zero-looklook/app/order/rpc/order" receiver="Order" name="UserHomestayOrderList" />
+        <method importPath="go-zero-looklook/app/order/rpc/order" receiver="Order" name="HomestayOrderDetail" />
       </methods>
     </inspection_tool>
   </profile>

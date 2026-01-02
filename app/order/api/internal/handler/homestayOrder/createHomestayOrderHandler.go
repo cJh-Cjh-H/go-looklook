@@ -9,7 +9,7 @@ import (
 	"go-zero-looklook/app/order/api/internal/types"
 )
 
-// 创建民宿订单
+// CreateHomestayOrderHandler 创建民宿订单
 func CreateHomestayOrderHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.CreateHomestayOrderReq

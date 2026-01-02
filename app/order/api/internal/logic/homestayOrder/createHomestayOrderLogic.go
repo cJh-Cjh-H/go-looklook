@@ -20,7 +20,7 @@ type CreateHomestayOrderLogic struct {
 	svcCtx *svc.ServiceContext
 }
 
-// 创建民宿订单
+// NewCreateHomestayOrderLogic 创建民宿订单
 func NewCreateHomestayOrderLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateHomestayOrderLogic {
 	return &CreateHomestayOrderLogic{
 		Logger: logx.WithContext(ctx),

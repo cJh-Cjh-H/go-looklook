@@ -2,6 +2,8 @@ package thirdPayment
 
 import (
 	"context"
+	"fmt"
+	"go-zero-looklook/pkg/pQrcode"
 
 	"go-zero-looklook/app/order/rpc/order"
 	"go-zero-looklook/app/payment/api/internal/svc"
@@ -14,8 +16,7 @@ import (
 	"go-zero-looklook/pkg/xerr"
 
 	"github.com/pkg/errors"
-	"github.com/wechatpay-apiv3/wechatpay-go/core"
-	"github.com/wechatpay-apiv3/wechatpay-go/services/payments/jsapi"
+
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
@@ -35,7 +36,7 @@ func NewThirdPaymentwxPayLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 	}
 }
 
-func (l *ThirdPaymentwxPayLogic) ThirdPaymentwxPay(req types.ThirdPaymentWxPayReq) (*types.ThirdPaymentWxPayResp, error) {
+func (l *ThirdPaymentwxPayLogic) ThirdPaymentwxPay(req types.ThirdPaymentWxPayReq) ([]byte, error) {
 
 	var totalPrice int64   // Total amount paid for current order(cent)
 	var description string // Current Payment Description.
@@ -55,33 +56,27 @@ func (l *ThirdPaymentwxPayLogic) ThirdPaymentwxPay(req types.ThirdPaymentWxPayRe
 	}
 
 	// Create WechatPay pre-processing orders
-	wechatPrepayRsp, err := l.createWxPrePayOrder(req.ServiceType, req.OrderSn, totalPrice, description)
+	payResp, err := l.createWxPrePayOrder(req.ServiceType, req.OrderSn, totalPrice, description)
 	if err != nil {
 		return nil, err
 	}
 
-	return &types.ThirdPaymentWxPayResp{
-		Appid:     l.svcCtx.Config.WxMiniConf.AppId,
-		NonceStr:  *wechatPrepayRsp.NonceStr,
-		PaySign:   *wechatPrepayRsp.PaySign,
-		Package:   *wechatPrepayRsp.Package,
-		Timestamp: *wechatPrepayRsp.TimeStamp,
-		SignType:  *wechatPrepayRsp.SignType,
-	}, nil
+	return payResp, nil
 }
 
 // Get the price and description information of the current order of the paid B&B
-func (l *ThirdPaymentwxPayLogic) createWxPrePayOrder(serviceType, orderSn string, totalPrice int64, description string) (*jsapi.PrepayWithRequestPaymentResponse, error) {
+func (l *ThirdPaymentwxPayLogic) createWxPrePayOrder(serviceType, orderSn string, totalPrice int64, description string) ([]byte, error) {
 
 	// 1、get user openId
 	userId := ctxdata.GetUidFromCtx(l.ctx)
 	userResp, err := l.svcCtx.UsercenterRpc.GetUserAuthByUserId(l.ctx, &usercenter.GetUserAuthByUserIdReq{
 		UserId:   userId,
-		AuthType: usercenterModel.UserAuthTypeSmallWX,
+		AuthType: usercenterModel.UserAuthTypeSystem,
 	})
 	if err != nil {
 		return nil, errors.Wrapf(ErrWxPayError, "Get user wechat openid err : %v , userId: %d , orderSn:%s", err, userId, orderSn)
 	}
+	fmt.Printf("userResp:%v", userResp)
 	if userResp.UserAuth == nil || userResp.UserAuth.Id == 0 {
 		return nil, errors.Wrapf(xerr.NewErrMsg("Get user wechat openid fail，Please pay before authorization by weChat"), "Get user WeChat openid does not exist  userId: %d , orderSn:%s", userId, orderSn)
 	}
@@ -95,40 +90,19 @@ func (l *ThirdPaymentwxPayLogic) createWxPrePayOrder(serviceType, orderSn string
 		OrderSn:     orderSn,
 		ServiceType: serviceType,
 	})
+	fmt.Printf("createPaymentResp:%v", createPaymentResp)
 	if err != nil || createPaymentResp.Sn == "" {
 		return nil, errors.Wrapf(ErrWxPayError,
 			"create local third payment record fail : err: %v , userId: %d,totalPrice: %d , orderSn: %s",
 			err, userId, totalPrice, orderSn)
 	}
-
 	// 3、create wechat pay pre pay order
-
-	wxPayClient, err := svc.NewWxPayClientV3(l.svcCtx.Config)
-	if err != nil {
-		return nil, err
+	p := &pQrcode.Pay{
+		Sn:      orderSn,
+		UserId:  userId,
+		AuthKey: openId,
 	}
-	jsApiSvc := jsapi.JsapiApiService{Client: wxPayClient}
-
-	// Get the prepay_id, as well as the parameters and signatures needed to invoke the payment
-	resp, _, err := jsApiSvc.PrepayWithRequestPayment(l.ctx,
-		jsapi.PrepayRequest{
-			Appid:       core.String(l.svcCtx.Config.WxMiniConf.AppId),
-			Mchid:       core.String(l.svcCtx.Config.WxPayConf.MchId),
-			Description: core.String(description),
-			OutTradeNo:  core.String(createPaymentResp.Sn),
-			Attach:      core.String(description),
-			NotifyUrl:   core.String(l.svcCtx.Config.WxPayConf.NotifyUrl),
-			Amount: &jsapi.Amount{
-				Total: core.Int64(totalPrice),
-			},
-			Payer: &jsapi.Payer{
-				Openid: core.String(openId),
-			},
-		},
-	)
-	if err != nil {
-		return nil, errors.Wrapf(ErrWxPayError, "Failed to initiate WeChat payment pre-order err : %v , userId: %d , orderSn:%s", err, userId, orderSn)
-	}
+	resp, err := pQrcode.PayQrcode(p)
 
 	return resp, nil
 
